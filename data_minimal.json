@@ -1,0 +1,22 @@
+[
+    {
+        "Code": "PG",
+        "Title": "Power Grid",
+        "Type": "Customer",
+        "Dependencies": [
+            "Turbine"
+        ],
+        "Visibility": 0,
+        "Evolution": 3.5
+    },
+    {
+        "Code": "Turbine",
+        "Title": "Turbine",
+        "Type": "Node",
+        "Dependencies": [
+            "FPP"
+        ],
+        "Visibility": 0.5,
+        "Evolution": 2.8
+    }
+]
