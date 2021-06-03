@@ -95,13 +95,7 @@ class TestGraphFromNodeList(TestCase):
         graph_from_node_list([parent, child])
 
         self.assertIn(
-            child, parent.neighbours
-        )
-        self.assertIn(
             child, parent.children
-        )
-        self.assertIn(
-            parent, child.neighbours
         )
 
     def test_multiple_children(self):
@@ -113,35 +107,8 @@ class TestGraphFromNodeList(TestCase):
         graph_from_node_list([child_B, parent, child_C])
 
         self.assertIn(
-            child_B, parent.neighbours
-        )
-        self.assertIn(
             child_B, parent.children
         )
         self.assertIn(
-            parent, child_B.neighbours
-        )
-        self.assertIn(
-            child_C, parent.neighbours
-        )
-        self.assertIn(
             child_C, parent.children
-        )
-        self.assertIn(
-            parent, child_C.neighbours
-        )
-
-    def test_multiple_parents(self):
-
-        node_A = MockNode("A", ["B", "C"])
-        node_B = MockNode("B", ["C"])
-        node_C = MockNode("C", [])
-
-        graph_from_node_list([node_B, node_A, node_C])
-
-        self.assertIn(
-            node_A, node_C.neighbours
-        )
-        self.assertIn(
-            node_B, node_C.neighbours
         )

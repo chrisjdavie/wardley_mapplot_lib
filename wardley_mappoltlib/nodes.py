@@ -25,8 +25,6 @@ class Node:
 
     # these are things for exploring the tree
     children: List[Node] = field(default_factory=list)
-    neighbours: List[Node] = field(default_factory=list)
-    first_caller: Optional[Node] = None
 
 
 def build_node_list(
@@ -53,11 +51,9 @@ def graph_from_node_list(all_nodes: List[Node]) -> None:
     """
     Updates the Nodes to have neighbours and children
     """
-    _code_node_map: Dict[str, Node] = {n.code: n for n in all_nodes}
+    code_node_map: Dict[str, Node] = {n.code: n for n in all_nodes}
 
     for a_node in all_nodes:
         for child_code in a_node.dependencies:
-            child_node: Node = _code_node_map[child_code]
-            child_node.neighbours.append(a_node)
-            a_node.neighbours.append(child_node)
+            child_node: Node = code_node_map[child_code]
             a_node.children.append(child_node)

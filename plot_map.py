@@ -9,7 +9,6 @@ import numpy as np
 from scipy import interpolate
 
 from wardley_mappoltlib.nodes import build_node_list, graph_from_node_list
-from wardley_mappoltlib.linearised_route import linearise_graph
 
 
 VISIBILITY_BOOST = 0.05
