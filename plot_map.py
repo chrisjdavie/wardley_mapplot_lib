@@ -86,6 +86,8 @@ def plot_connecting_lines(node_list):
                     child.visibility_rescaled + VISIBILITY_BOOST],
                 c="black", zorder=-1)
 
+    # make the annotations not cross the lines
+    # get lots of dots along the lines plotted above
     xx_routes = []
     yy_routes = []
     for node in node_list:
@@ -100,11 +102,10 @@ def plot_connecting_lines(node_list):
             yy_routes.append(
                 f(xx_routes[-1])
             )
-
     xx_pts = np.concatenate(xx_routes)
     yy_pts = np.concatenate(yy_routes)
 
-    # shift the annotations
+    # shift the annotations away from those points
     adjust_text(annotations,
                 x=xx_pts,
                 y=yy_pts,
