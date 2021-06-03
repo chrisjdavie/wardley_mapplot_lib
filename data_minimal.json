@@ -1,22 +1,49 @@
 [
     {
-        "Code": "PG",
-        "Title": "Power Grid",
-        "Type": "Customer",
-        "Dependencies": [
+        "code": "PG",
+        "title": "Power Grid",
+        "type": "Customer",
+        "dependencies": [
             "Turbine"
         ],
-        "Visibility": 0,
-        "Evolution": 3.5
+        "visibility": 0,
+        "evolution": 3.5
     },
     {
-        "Code": "Turbine",
-        "Title": "Turbine",
-        "Type": "Node",
-        "Dependencies": [
+        "code": "Turbine",
+        "title": "Turbine",
+        "type": "Node",
+        "dependencies": [
             "FPP"
         ],
-        "Visibility": 0.5,
-        "Evolution": 2.8
+        "visibility": 0.5,
+        "evolution": 2.8
+    },
+    {
+        "code": "FPP",
+        "title": "Fusion Power Plant",
+        "type": "Node",
+        "dependencies": [
+            "Laser",
+            "Targets"
+        ],
+        "visibility": 1,
+        "evolution": 1.1
+    },
+    {
+        "code": "Laser",
+        "title": "Laser System",
+        "type": "Node",
+        "dependencies": [],
+        "visibility": 2,
+        "evolution": 0.5
+    },
+    {
+        "code": "Targets",
+        "title": "Targets",
+        "type": "Node",
+        "dependencies": [],
+        "visibility": 6,
+        "evolution": 0.2
     }
 ]
