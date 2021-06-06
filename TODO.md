@@ -5,3 +5,13 @@
 - - - But then, is this all a good idea anyways?
 * Targets need to have a design in them
 * document axis values
+
+Map
+* FPP depends on Target Manufacture
+* Target design depends on Laser System (and visa versa)
+* Targets -> Target Design
+* Consider structure (first wall problem)
+
+Notes
+* Tritium production includes; transport, manufacture, storage
+* * Tritium Production is probably all here, it's very secret weapons stuff

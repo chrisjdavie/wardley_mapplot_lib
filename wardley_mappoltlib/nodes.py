@@ -5,7 +5,7 @@ one place I need it
 """
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Union
 
 
 @dataclass

@@ -1,9 +1,7 @@
-from copy import deepcopy
 import json
 from pathlib import Path
-from pprint import pprint
 
-from adjustText import adjust_text
+from adjustText import adjust_text, get_text_position
 from matplotlib import pyplot as plt
 import numpy as np
 from scipy import interpolate
@@ -13,7 +11,7 @@ from wardley_mappoltlib.nodes import build_node_list, graph_from_node_list
 
 VISIBILITY_BOOST = 0.05
 
-graph_file = Path("data_minimal.json")
+graph_file = Path("fusion/data.json")
 
 with graph_file.open("r") as graph_fh:
     graph_data = json.load(graph_fh)
@@ -40,6 +38,11 @@ def setup_plot(ax):
     for tick in ax.get_xmajorticklabels():
         tick.set_horizontalalignment("left")
         tick.set_style("italic")
+
+    plt.vlines(
+        range(5), -100, +100,
+        linestyles=(0, (5, 5)), colors="lightgrey", zorder=-2)
+
     ax.spines["top"].set_visible(False)
 
     plt.ylabel("Value Chain", weight="bold")
@@ -66,8 +69,9 @@ text = [node.title for node in node_list]
 annotations = []
 
 for x_i, y_i, t_i in zip(xx, yy, text):
+    ann = ax.annotate(t_i, (x_i, y_i - 0.01), size=12, ha="right", va="bottom")
     annotations.append(
-        ax.annotate(t_i, (x_i, y_i - 0.01), ha="center", va="top", size=12)
+        ann
     )
 
 setup_plot(ax)
@@ -109,21 +113,10 @@ def plot_connecting_lines(node_list):
     adjust_text(annotations,
                 x=xx_pts,
                 y=yy_pts,
-                expand_points=(1.1, 1.5),
-                force_points=0.15)
+                expand_points=(1.1, 1.2))
 
 
 plot_connecting_lines(node_list)
 
 
 plt.show()
-
-# TODO
-# - graph to object (use dataclass)
-# - branching plot
-# - node-to-node plot
-# - dfs, left-wise line for plotting
-# - employ adjust text to avoid overlap
-# - more points
-# - see!
-# - type the functions

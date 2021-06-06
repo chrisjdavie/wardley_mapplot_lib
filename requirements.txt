@@ -1,0 +1,4 @@
+adjustText
+matplotlib
+numpy
+scipy
