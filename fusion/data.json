@@ -1,177 +1,180 @@
-[
-    {
-        "code": "PG",
-        "title": "Power Grid",
-        "type": "Customer",
-        "dependencies": [
-            "Turbine"
-        ],
-        "visibility": 0,
-        "evolution": 3.5
-    },
-    {
-        "code": "Turbine",
-        "title": "Turbine",
-        "type": "Node",
-        "dependencies": [
-            "FPP"
-        ],
-        "visibility": 0.5,
-        "evolution": 2.8
-    },
-    {
-        "code": "FPP",
-        "title": "Fusion Power Plant",
-        "type": "Node",
-        "dependencies": [
-            "Laser",
-            "Targets",
-            "Struct"
-        ],
-        "visibility": 1,
-        "evolution": 1.1
-    },
-    {
-        "code": "Targets",
-        "title": "Targets \n(design)",
-        "type": "Node",
-        "dependencies": [
-            "Injection",
-            "TM",
-            "Storage",
-            "PP"
-        ],
-        "visibility": 2,
-        "evolution": 0.7
-    },
-    {
-        "code": "PP",
-        "title": "Plasma \nPhysics",
-        "type": "Node",
-        "dependencies": [],
-        "visibility": 2.2,
-        "evolution": 1.7
-    },
-    {
-        "code": "Injection",
-        "title": "Injection",
-        "type": "Node",
-        "dependencies": [],
-        "visibility": 2.3,
-        "evolution": 0.1
-    },
-    {
-        "code": "TM",
-        "title": "Target \nManufacture",
-        "type": "Node",
-        "dependencies": [
-            "TiMar"
-        ],
-        "visibility": 4,
-        "evolution": 0.1
-    },
-    {
-        "code": "Storage",
-        "title": "Storage, \nTransport",
-        "type": "Node",
-        "dependencies": [],
-        "visibility": 3,
-        "evolution": 0.6
-    },
-    {
-        "code": "TiMar",
-        "title": "Tritium \nMarket",
-        "type": "Node",
-        "dependencies": [
-            "TiMan"
-        ],
-        "visibility": 5,
-        "evolution": 0.2
-    },
-    {
-        "code": "TiMan",
-        "title": "Tritium \nProduction",
-        "type": "Node",
-        "dependencies": [
-            "LiMine",
-            "FW"
-        ],
-        "visibility": 6,
-        "evolution": 1.5
-    },
-    {
-        "code": "LiMine",
-        "title": "Lithium \nMining",
-        "type": "Node",
-        "dependencies": [],
-        "visibility": 7,
-        "evolution": 3.2
-    },
-    {
-        "code": "Struct",
-        "title": "Structure",
-        "type": "Node",
-        "dependencies": [
-            "FW",
-            "Supports"
-        ],
-        "visibility": 6,
-        "evolution": 0.6
-    },
-    {
-        "code": "Supports",
-        "title": "Supports",
-        "type": "Node",
-        "dependencies": [],
-        "visibility": 6.5,
-        "evolution": 0.6
-    },
-    {
-        "code": "FW",
-        "title": "First \nWall",
-        "type": "Node",
-        "dependencies": [
-            "HR",
-            "Optics"
-        ],
-        "visibility": 8,
-        "evolution": 0.1
-    },
-    {
-        "code": "Laser",
-        "title": "Laser \nSystem",
-        "type": "Node",
-        "dependencies": [
-            "Driver",
-            "Optics"
-        ],
-        "visibility": 8,
-        "evolution": 0.8
-    },
-    {
-        "code": "Driver",
-        "title": "Driver",
-        "type": "Node",
-        "dependencies": [],
-        "visibility": 9,
-        "evolution": 0.7
-    },
-    {
-        "code": "Optics",
-        "title": "Optics",
-        "type": "Node",
-        "dependencies": [
-            "HR"
-        ],
-        "visibility": 9,
-        "evolution": 0.2
-    },
-    {
-        "code": "HR",
-        "title": "Heat \nRegulation",
-        "type": "Node",
-        "dependencies": [],
-        "visibility": 10,
-        "evolution": 0.4
-    }
-]
+{
+    "title": "Current state of Fusion research",
+    "nodes": [
+        {
+            "code": "PG",
+            "title": "Power Grid",
+            "type": "Customer",
+            "dependencies": [
+                "Turbine"
+            ],
+            "visibility": 0,
+            "evolution": 3.5
+        },
+        {
+            "code": "Turbine",
+            "title": "Turbine",
+            "type": "Node",
+            "dependencies": [
+                "FPP"
+            ],
+            "visibility": 0.5,
+            "evolution": 2.8
+        },
+        {
+            "code": "FPP",
+            "title": "Fusion Power Plant",
+            "type": "Node",
+            "dependencies": [
+                "Laser",
+                "Targets",
+                "Struct"
+            ],
+            "visibility": 1,
+            "evolution": 1.1
+        },
+        {
+            "code": "Targets",
+            "title": "Targets \n(design)",
+            "type": "Node",
+            "dependencies": [
+                "Injection",
+                "TM",
+                "Storage",
+                "PP"
+            ],
+            "visibility": 2,
+            "evolution": 0.7
+        },
+        {
+            "code": "PP",
+            "title": "Plasma \nPhysics",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2.2,
+            "evolution": 1.7
+        },
+        {
+            "code": "Injection",
+            "title": "Injection",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2.3,
+            "evolution": 0.1
+        },
+        {
+            "code": "TM",
+            "title": "Target \nManufacture",
+            "type": "Node",
+            "dependencies": [
+                "TiMar"
+            ],
+            "visibility": 4,
+            "evolution": 0.1
+        },
+        {
+            "code": "Storage",
+            "title": "Storage, \nTransport",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 3,
+            "evolution": 0.6
+        },
+        {
+            "code": "TiMar",
+            "title": "Tritium \nMarket",
+            "type": "Node",
+            "dependencies": [
+                "TiMan"
+            ],
+            "visibility": 5,
+            "evolution": 0.2
+        },
+        {
+            "code": "TiMan",
+            "title": "Tritium \nProduction",
+            "type": "Node",
+            "dependencies": [
+                "LiMine",
+                "FW"
+            ],
+            "visibility": 6,
+            "evolution": 1.5
+        },
+        {
+            "code": "LiMine",
+            "title": "Lithium \nMining",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 7,
+            "evolution": 3.2
+        },
+        {
+            "code": "Struct",
+            "title": "Structure",
+            "type": "Node",
+            "dependencies": [
+                "FW",
+                "Supports"
+            ],
+            "visibility": 6,
+            "evolution": 0.6
+        },
+        {
+            "code": "Supports",
+            "title": "Supports",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 6.5,
+            "evolution": 0.6
+        },
+        {
+            "code": "FW",
+            "title": "First \nWall",
+            "type": "Node",
+            "dependencies": [
+                "HR",
+                "Optics"
+            ],
+            "visibility": 8,
+            "evolution": 0.1
+        },
+        {
+            "code": "Laser",
+            "title": "Laser \nSystem",
+            "type": "Node",
+            "dependencies": [
+                "Driver",
+                "Optics"
+            ],
+            "visibility": 8,
+            "evolution": 0.8
+        },
+        {
+            "code": "Driver",
+            "title": "Driver",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 9,
+            "evolution": 0.7
+        },
+        {
+            "code": "Optics",
+            "title": "Optics",
+            "type": "Node",
+            "dependencies": [
+                "HR"
+            ],
+            "visibility": 9,
+            "evolution": 0.2
+        },
+        {
+            "code": "HR",
+            "title": "Heat \nRegulation",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 10,
+            "evolution": 0.4
+        }
+    ]
+}

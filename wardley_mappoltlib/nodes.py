@@ -4,8 +4,24 @@ It's less effort to just code up the dfs search using keys and dicts in the
 one place I need it
 """
 from __future__ import annotations
+from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Union
+
+
+ArrowDataType = Dict[str, float]
+
+
+@dataclass
+class Arrow:
+    """
+    An arrow pointing away from a Node in a Wardley Map
+    """
+    evolution: float
+    type: str
+
+
+NodeDataType = Dict[str, Union[str, float, List[str], ArrowDataType]]
 
 
 @dataclass
@@ -20,20 +36,28 @@ class Node:
     dependencies: List[str]
     visibility: float
     evolution: float
+    arrow: Optional[Arrow]
 
     visibility_rescaled: float = -1.0
 
     # these are things for exploring the tree
     children: List[Node] = field(default_factory=list)
 
+    @classmethod
+    def from_dict(cls, data: NodeDataType) -> Node:
+        _data_to_modify = deepcopy(data)
+        arrow: Optional[Arrow] = None
+        if "arrow" in _data_to_modify:
+            if arrow_data := _data_to_modify.pop("arrow"):
+                arrow = Arrow(**arrow_data)
+        return cls(**_data_to_modify, arrow=arrow)
 
-def build_node_list(
-    graph_data: List[Dict[str, Union[str, float, List[str]]]]
-) -> List[Node]:
+
+def build_node_list(graph_data: List[NodeDataType]) -> List[Node]:
     """
     builds a node list from a graph_data dictionary
     """
-    node_list = [Node(**gd) for gd in graph_data]
+    node_list = [Node.from_dict(gd) for gd in graph_data]
     if len(node_list) == 1:
         node_list[0].visibility_rescaled = node_list[0].visibility
         return node_list

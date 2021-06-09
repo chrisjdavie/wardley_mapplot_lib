@@ -1,0 +1,102 @@
+{
+    "title": "Solver, 1 sport, 2 competitions",
+    "nodes": [
+        {
+            "code": "Blake",
+            "title": "Project Manager",
+            "type": "Customer",
+            "dependencies": [
+                "Example",
+                "Interface"
+            ],
+            "visibility": 0,
+            "evolution": 1.2,
+            "arrow": {
+                "evolution": 1.4,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Example",
+            "title": "JSON examples",
+            "type": "Node",
+            "dependencies": [
+                "QA"
+            ],
+            "visibility": 1,
+            "evolution": 1.3,
+            "arrow": {
+                "evolution": 1.5,
+                "type": "inertia"
+            }
+        },
+        {
+            "code": "QA",
+            "title": "Manual tests",
+            "type": "Node",
+            "dependencies": [
+                "Algo"
+            ],
+            "visibility": 2,
+            "evolution": 1.1,
+            "arrow": {
+                "evolution": 1.3,
+                "type": "inertia"
+            }
+        },
+        {
+            "code": "Interface",
+            "title": "Interface \n(code, documentation, \nconfig parser)",
+            "type": "Node",
+            "dependencies": [
+                "Algo"
+            ],
+            "visibility": 1,
+            "evolution": 1.0,
+            "arrow": {
+                "evolution": 1.2,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Algo",
+            "title": "Algorithm \nSolver",
+            "type": "Node",
+            "dependencies": [
+                "Research",
+                "Python",
+                "Tools"
+            ],
+            "visibility": 3,
+            "evolution": 1.0,
+            "arrow": {
+                "evolution": 1.2,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Research",
+            "title": "Research, \nknapsack problem",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 4,
+            "evolution": 1.8
+        },
+        {
+            "code": "Python",
+            "title": "Python language \n& ecosystem",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 4,
+            "evolution": 3.2
+        },
+        {
+            "code": "Tools",
+            "title": "My laptop, pens, paper",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 5,
+            "evolution": 2.8
+        }
+    ]
+}

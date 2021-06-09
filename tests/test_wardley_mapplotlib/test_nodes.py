@@ -1,6 +1,8 @@
+from copy import deepcopy
 from unittest import TestCase
 
-from wardley_mappoltlib.nodes import build_node_list, graph_from_node_list, Node
+from wardley_mappoltlib.nodes import \
+    Arrow, build_node_list, graph_from_node_list, Node
 
 
 class MockNode(Node):
@@ -12,11 +14,50 @@ class MockNode(Node):
             "",
             dependencies,
             0.0,
-            0.0
+            0.0,
+            None
         )
 
     def __repr__(self):
         return self.code
+
+
+class TestNode(TestCase):
+
+    def setUp(self) -> None:
+        self._data = {
+            "code": "",
+            "title": "",
+            "type": "",
+            "dependencies": [],
+            "visibility": 0.0,
+            "evolution": 0.0,
+            "arrow": {
+                "evolution": 1.0,
+                "type": ""
+            }
+        }
+
+    def test_arrow_builds(self):
+
+        expected_arrow = Arrow(**self._data["arrow"])
+        a_node = Node.from_dict(self._data)
+
+        self.assertEqual(expected_arrow, a_node.arrow)
+
+    def test_input_data_not_changed(self):
+
+        data_copy = deepcopy(self._data)
+
+        Node.from_dict(self._data)
+        self.assertEqual(self._data, data_copy)
+
+    def test_empty_arrow(self):
+
+        self._data["arrow"] = {}
+        a_node = Node.from_dict(self._data)
+
+        self.assertEqual(a_node.arrow, None)
 
 
 class TestBuildNodeList(TestCase):
@@ -36,7 +77,7 @@ class TestBuildNodeList(TestCase):
 
         node_list = build_node_list(data)
         self.assertEqual(
-            node_list[0], Node(**data[0], visibility_rescaled=0.5)
+            node_list[0], Node(**data[0], visibility_rescaled=0.5, arrow=None)
         )
 
     def test_two_items(self):
@@ -75,13 +116,14 @@ class TestBuildNodeList(TestCase):
 
         node_list = build_node_list(data)
         self.assertEqual(
-            node_list[0], Node(**data[0], visibility_rescaled=1)
+            node_list[0], Node(**data[0], visibility_rescaled=1, arrow=None)
         )
         self.assertEqual(
-            node_list[1], Node(**data[1], visibility_rescaled=0.875)
+            node_list[1], Node(
+                **data[1], visibility_rescaled=0.875, arrow=None)
         )
         self.assertEqual(
-            node_list[2], Node(**data[2], visibility_rescaled=0.0)
+            node_list[2], Node(**data[2], visibility_rescaled=0.0, arrow=None)
         )
 
 

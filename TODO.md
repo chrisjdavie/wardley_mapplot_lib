@@ -12,6 +12,10 @@ Map
 * Targets -> Target Design
 * Consider structure (first wall problem)
 
+Structural
+* Better word for arrow than "type"
+* Look up other symbols Wardley uses for this
+
 Notes
 * Tritium production includes; transport, manufacture, storage
 * * Tritium Production is probably all here, it's very secret weapons stuff
