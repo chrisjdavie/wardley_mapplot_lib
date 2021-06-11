@@ -160,7 +160,7 @@ def move_annotations_away(
                 expand_points=(1.1, 1.2))
 
 
-graph_path = Path("lul_algo/3_many_sports_competitions.json")
+graph_path = Path("lul_algo/0_r_n_d.json")
 image_path = graph_path.parent.absolute() / (graph_path.stem+".svg")
 
 with graph_path.open("r") as graph_fh:

@@ -1,0 +1,166 @@
+{
+    "title": "Rebuild - API, integration tests, TDD",
+    "nodes": [
+        {
+            "code": "Blake",
+            "title": "Project Manager",
+            "type": "Customer",
+            "dependencies": [
+                "Example",
+                "Interface",
+                "SpoCon"
+            ],
+            "visibility": 0,
+            "evolution": 1.7,
+            "arrow": {
+                "evolution": 1.9,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "SpoCon",
+            "title": "Sports Configuration",
+            "type": "Node",
+            "dependencies": [
+                "ConPar"
+            ],
+            "visibility": 1,
+            "evolution": 1.5,
+            "arrow": {
+                "evolution": 1.6,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Example",
+            "title": "JSON examples",
+            "type": "Node",
+            "dependencies": [
+                "QA"
+            ],
+            "visibility": 1,
+            "evolution": 2.0,
+            "arrow": {
+                "evolution": 2.1,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "QA",
+            "title": "Test Suite",
+            "type": "Node",
+            "dependencies": [
+                "Algo",
+                "Pytest"
+            ],
+            "visibility": 2,
+            "evolution": 2.0,
+            "arrow": {
+                "evolution": 2.1,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Pytest",
+            "title": "pytest",
+            "type": "Node",
+            "dependencies": [
+                "Python"
+            ],
+            "visibility": 3,
+            "evolution": 2.7
+        },
+        {
+            "code": "Interface",
+            "title": "Interface \n(Docker Image, API, documentation)",
+            "type": "Node",
+            "dependencies": [
+                "ConPar",
+                "Docker"
+            ],
+            "visibility": 1,
+            "evolution": 1.8,
+            "arrow": {
+                "evolution": 1.9,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Docker",
+            "title": "Docker",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2,
+            "evolution": 2.9
+        },
+        {
+            "code": "ConPar",
+            "title": "Config parser, paralleliser",
+            "type": "Node",
+            "dependencies": [
+                "Algo"
+            ],
+            "visibility": 2,
+            "evolution": 1.7,
+            "arrow": {
+                "evolution": 1.8,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Algo",
+            "title": "Solver",
+            "type": "Node",
+            "dependencies": [
+                "Research",
+                "Cython",
+                "Python",
+                "Tools"
+            ],
+            "visibility": 3,
+            "evolution": 1.9,
+            "arrow": {
+                "evolution": 2.0,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Research",
+            "title": "Knowledge, \nknapsack problem",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 4,
+            "evolution": 1.8,
+            "arrow": {
+                "evolution": 1.9,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Cython",
+            "title": "Cython",
+            "type": "Node",
+            "dependencies": [
+                "Python"
+            ],
+            "visibility": 4,
+            "evolution": 2.4
+        },
+        {
+            "code": "Python",
+            "title": "Python language \n& ecosystem",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 5,
+            "evolution": 3.2
+        },
+        {
+            "code": "Tools",
+            "title": "My laptop, pens, paper",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 5,
+            "evolution": 2.8
+        }
+    ]
+}
