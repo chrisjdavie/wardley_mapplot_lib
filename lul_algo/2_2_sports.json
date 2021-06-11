@@ -1,5 +1,5 @@
 {
-    "title": "Solver, 1 sport, 2 competitions",
+    "title": "Additional sport",
     "nodes": [
         {
             "code": "Blake",
@@ -10,9 +10,9 @@
                 "Interface"
             ],
             "visibility": 0,
-            "evolution": 1.2,
+            "evolution": 1.3,
             "arrow": {
-                "evolution": 1.4,
+                "evolution": 1.5,
                 "type": "driven"
             }
         },
@@ -24,6 +24,20 @@
                 "QA"
             ],
             "visibility": 1,
+            "evolution": 1.4,
+            "arrow": {
+                "evolution": 1.6,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "QA",
+            "title": "Manual tests",
+            "type": "Node",
+            "dependencies": [
+                "Algo"
+            ],
+            "visibility": 2,
             "evolution": 1.3,
             "arrow": {
                 "evolution": 1.4,
@@ -31,8 +45,22 @@
             }
         },
         {
-            "code": "QA",
-            "title": "Manual tests",
+            "code": "Interface",
+            "title": "Interface \n(code, documentation)",
+            "type": "Node",
+            "dependencies": [
+                "ConPar"
+            ],
+            "visibility": 1,
+            "evolution": 1.1,
+            "arrow": {
+                "evolution": 1.2,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "ConPar",
+            "title": "Config parser, paralleliser",
             "type": "Node",
             "dependencies": [
                 "Algo"
@@ -45,53 +73,50 @@
             }
         },
         {
-            "code": "Interface",
-            "title": "Interface \n(code, documentation, \nconfig parser)",
-            "type": "Node",
-            "dependencies": [
-                "Algo"
-            ],
-            "visibility": 1,
-            "evolution": 1.0,
-            "arrow": {
-                "evolution": 1.1,
-                "type": "driven"
-            }
-        },
-        {
             "code": "Algo",
             "title": "Solver",
             "type": "Node",
             "dependencies": [
-                "Knowledge",
+                "Research",
+                "Cython",
                 "Python",
                 "Tools"
             ],
             "visibility": 3,
-            "evolution": 1.0,
+            "evolution": 1.1,
             "arrow": {
-                "evolution": 1.2,
+                "evolution": 1.3,
                 "type": "driven"
             }
         },
         {
-            "code": "Knowledge",
+            "code": "Research",
             "title": "Knowledge, \nknapsack problem",
             "type": "Node",
             "dependencies": [],
             "visibility": 4,
-            "evolution": 1.1,
+            "evolution": 1.2,
             "arrow": {
-                "evolution": 1.2,
+                "evolution": 1.3,
                 "type": "driven"
             }
+        },
+        {
+            "code": "Cython",
+            "title": "Cython",
+            "type": "Node",
+            "dependencies": [
+                "Python"
+            ],
+            "visibility": 4,
+            "evolution": 2.5
         },
         {
             "code": "Python",
             "title": "Python language \n& ecosystem",
             "type": "Node",
             "dependencies": [],
-            "visibility": 4,
+            "visibility": 5,
             "evolution": 3.2
         },
         {

@@ -39,7 +39,7 @@
                 "Tools"
             ],
             "visibility": 2,
-            "evolution": 0.5,
+            "evolution": 0.02,
             "arrow": {
                 "evolution": 1.0,
                 "type": "driven"
@@ -51,7 +51,7 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 4,
-            "evolution": 1.8
+            "evolution": 1.6
         },
         {
             "code": "Python",
