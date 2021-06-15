@@ -58,7 +58,9 @@
             "code": "Injection",
             "title": "Injection",
             "type": "Node",
-            "dependencies": [],
+            "dependencies": [
+                "ConSys"
+            ],
             "visibility": 2.3,
             "evolution": 0.1
         },
@@ -121,18 +123,27 @@
             "evolution": 0.6
         },
         {
+            "code": "ConSys",
+            "title": "Control \nSystems",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 8.2,
+            "evolution": 0.5
+        },
+        {
             "code": "Supports",
             "title": "Supports",
             "type": "Node",
             "dependencies": [],
             "visibility": 6.5,
-            "evolution": 0.6
+            "evolution": 0.7
         },
         {
             "code": "FW",
             "title": "First \nWall",
             "type": "Node",
             "dependencies": [
+                "ConSys",
                 "HR",
                 "Optics"
             ],

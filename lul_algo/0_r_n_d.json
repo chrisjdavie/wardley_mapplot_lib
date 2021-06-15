@@ -20,7 +20,8 @@
             "title": "JSON examples",
             "type": "Node",
             "dependencies": [
-                "Algo"
+                "Algo",
+                "Direct"
             ],
             "visibility": 1,
             "evolution": 1.0,
@@ -28,6 +29,16 @@
                 "evolution": 1.2,
                 "type": "driven"
             }
+        },
+        {
+            "code": "Direct",
+            "title": "Direct Solver",
+            "type": "Node",
+            "dependencies": [
+                "Algo"
+            ],
+            "visibility": 1.5,
+            "evolution": 1.1
         },
         {
             "code": "Algo",
@@ -51,7 +62,7 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 4,
-            "evolution": 1.6
+            "evolution": 2.1
         },
         {
             "code": "Python",

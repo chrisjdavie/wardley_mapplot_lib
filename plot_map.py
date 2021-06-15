@@ -160,26 +160,44 @@ def move_annotations_away(
                 expand_points=(1.1, 1.2))
 
 
-graph_path = Path("lul_algo/0_r_n_d.json")
-image_path = graph_path.parent.absolute() / (graph_path.stem+".svg")
+def draw_wardley_map_from_json(graph_path: Path):
+    with graph_path.open("r") as graph_fh:
+        graph_data = json.load(graph_fh)
+    node_list: List[Node] = build_node_list(graph_data["nodes"])
+    graph_from_node_list(node_list)
 
-with graph_path.open("r") as graph_fh:
-    graph_data = json.load(graph_fh)
-node_list: List[Node] = build_node_list(graph_data["nodes"])
-graph_from_node_list(node_list)
+    fig = plt.figure(figsize=[12.8, 9.6])
+    ax = fig.add_subplot()
 
-fig = plt.figure(figsize=[12.8, 9.6])
-ax = fig.add_subplot()
+    setup_plot(ax)
+    plt.title(graph_data["title"], weight="bold", fontsize=14)
+    # shift visibility
+    for node in node_list:
+        node.visibility_rescaled += VISIBILITY_BOOST
+    annotations = plot_annotate_nodes_arrows(node_list, ax)
+    xxx_dep, yyy_dep = build_connecting_lines(node_list)
+    plot_connecting_lines(xxx_dep, yyy_dep)
+    move_annotations_away(xxx_dep, yyy_dep, annotations)
 
-setup_plot(ax)
-plt.title(graph_data["title"], weight="bold", fontsize=14)
-# shift visibility
-for node in node_list:
-    node.visibility_rescaled += VISIBILITY_BOOST
-annotations = plot_annotate_nodes_arrows(node_list, ax)
-xxx_dep, yyy_dep = build_connecting_lines(node_list)
-plot_connecting_lines(xxx_dep, yyy_dep)
-move_annotations_away(xxx_dep, yyy_dep, annotations)
 
-plt.savefig(image_path)
-plt.show()
+if __name__ == "__main__":
+
+    data_dir = Path("lul_algo")
+    graph_path = data_dir / "4_api_n_TDD.json"
+    draw_wardley_map_from_json(graph_path)
+
+    image_path = data_dir / (graph_path.stem+".svg")
+    plt.savefig(image_path)
+
+    plt.show()
+
+
+# graph_path = Path("fusion/data.json")
+
+# draw_wardley_map_from_json(graph_path)
+
+# # a rectangle
+# # rect = mpatches.Rectangle(
+
+# # )
+# plt.show()
