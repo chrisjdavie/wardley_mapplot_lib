@@ -53,7 +53,7 @@
                 "Algo",
                 "Pytest"
             ],
-            "visibility": 2.5,
+            "visibility": 3,
             "evolution": 2.0,
             "arrow": {
                 "evolution": 2.1,
@@ -67,7 +67,7 @@
             "dependencies": [
                 "Python"
             ],
-            "visibility": 3,
+            "visibility": 4,
             "evolution": 2.7
         },
         {
@@ -126,7 +126,7 @@
                 "Python",
                 "Tools"
             ],
-            "visibility": 3,
+            "visibility": 4,
             "evolution": 1.9,
             "arrow": {
                 "evolution": 2.0,
@@ -138,7 +138,7 @@
             "title": "Knowledge, \nknapsack problem",
             "type": "Node",
             "dependencies": [],
-            "visibility": 4,
+            "visibility": 5,
             "evolution": 1.8,
             "arrow": {
                 "evolution": 1.9,
@@ -152,7 +152,7 @@
             "dependencies": [
                 "Python"
             ],
-            "visibility": 4,
+            "visibility": 5,
             "evolution": 2.4
         },
         {
@@ -160,7 +160,7 @@
             "title": "Python language \n& ecosystem",
             "type": "Node",
             "dependencies": [],
-            "visibility": 5,
+            "visibility": 6,
             "evolution": 3.2
         },
         {
@@ -168,7 +168,7 @@
             "title": "My laptop, pens, paper",
             "type": "Node",
             "dependencies": [],
-            "visibility": 5,
+            "visibility": 6,
             "evolution": 2.8
         }
     ]
