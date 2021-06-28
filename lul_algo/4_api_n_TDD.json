@@ -53,7 +53,7 @@
                 "Algo",
                 "Pytest"
             ],
-            "visibility": 2,
+            "visibility": 2.5,
             "evolution": 2.0,
             "arrow": {
                 "evolution": 2.1,
@@ -98,7 +98,8 @@
             "title": "Config parser, paralleliser",
             "type": "Node",
             "dependencies": [
-                "Algo"
+                "Algo",
+                "DesPat"
             ],
             "visibility": 2,
             "evolution": 1.7,
@@ -106,6 +107,14 @@
                 "evolution": 1.8,
                 "type": "driven"
             }
+        },
+        {
+            "code": "DesPat",
+            "title": "Parallel programming\ndesign patterns",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 3,
+            "evolution": 3.2
         },
         {
             "code": "Algo",

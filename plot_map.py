@@ -190,14 +190,3 @@ if __name__ == "__main__":
     plt.savefig(image_path)
 
     plt.show()
-
-
-# graph_path = Path("fusion/data.json")
-
-# draw_wardley_map_from_json(graph_path)
-
-# # a rectangle
-# # rect = mpatches.Rectangle(
-
-# # )
-# plt.show()
