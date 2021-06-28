@@ -117,10 +117,19 @@
             "type": "Node",
             "dependencies": [
                 "FW",
-                "Supports"
+                "Supports",
+                "RadWas"
             ],
             "visibility": 6,
             "evolution": 0.6
+        },
+        {
+            "code": "RadWas",
+            "title": "Radioactive waste\nmanagement",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 7,
+            "evolution": 1.3
         },
         {
             "code": "ConSys",
