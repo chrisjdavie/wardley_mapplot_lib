@@ -9,7 +9,7 @@
                 "Example"
             ],
             "visibility": 0,
-            "evolution": 1.1,
+            "evolution": 1.0,
             "arrow": {
                 "evolution": 1.3,
                 "type": "driven"
@@ -35,10 +35,11 @@
             "title": "Direct Solver",
             "type": "Node",
             "dependencies": [
-                "Algo"
+                "Algo",
+                "Python"
             ],
             "visibility": 1.5,
-            "evolution": 1.1
+            "evolution": 1.5
         },
         {
             "code": "Algo",
@@ -50,7 +51,7 @@
                 "Tools"
             ],
             "visibility": 2,
-            "evolution": 0.02,
+            "evolution": 0.5,
             "arrow": {
                 "evolution": 1.0,
                 "type": "driven"
@@ -62,7 +63,7 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 4,
-            "evolution": 2.1
+            "evolution": 0.5
         },
         {
             "code": "Python",
@@ -70,7 +71,7 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 3,
-            "evolution": 3.2
+            "evolution": 1.5
         },
         {
             "code": "Tools",
@@ -78,7 +79,7 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 5,
-            "evolution": 2.8
+            "evolution": 1.5
         }
     ]
 }

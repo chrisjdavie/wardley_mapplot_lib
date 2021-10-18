@@ -55,7 +55,7 @@ def setup_plot(ax):
     ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
 
 
-def plot_annotate_nodes_arrows(node_list: List[Node], ax):
+def plot_annotate_nodes(node_list: List[Node], ax):
     # Sort out axis points
     xx = [node.evolution for node in node_list]
     yy = [node.visibility_rescaled for node in node_list]
@@ -72,7 +72,11 @@ def plot_annotate_nodes_arrows(node_list: List[Node], ax):
             ann
         )
 
-    collection = []
+    return annotations
+
+
+def plot_arrow(node_list: List[Node], ax):
+
     for node in node_list:
         if node.arrow:
             plt.hlines(
@@ -107,8 +111,6 @@ def plot_annotate_nodes_arrows(node_list: List[Node], ax):
                         color="red"
                     )
                 )
-
-    return annotations
 
 
 def build_connecting_lines(node_list: List[Node]
@@ -160,33 +162,68 @@ def move_annotations_away(
                 expand_points=(1.1, 1.2))
 
 
-def draw_wardley_map_from_json(graph_path: Path):
-    with graph_path.open("r") as graph_fh:
-        graph_data = json.load(graph_fh)
-    node_list: List[Node] = build_node_list(graph_data["nodes"])
+def draw_wardley_map_from_json(data_path: Path):
+    with data_path.open("r") as data_fh:
+        data_data = json.load(data_fh)
+    node_list: List[Node] = build_node_list(data_data["nodes"])
     graph_from_node_list(node_list)
 
     fig = plt.figure(figsize=[12.8, 9.6])
     ax = fig.add_subplot()
 
     setup_plot(ax)
-    plt.title(graph_data["title"], weight="bold", fontsize=14)
+    plt.title(data_data["title"], weight="bold", fontsize=14)
     # shift visibility
     for node in node_list:
         node.visibility_rescaled += VISIBILITY_BOOST
-    annotations = plot_annotate_nodes_arrows(node_list, ax)
+    annotations = plot_annotate_nodes(node_list, ax)
+    plot_arrow(node_list, ax)
     xxx_dep, yyy_dep = build_connecting_lines(node_list)
     plot_connecting_lines(xxx_dep, yyy_dep)
     move_annotations_away(xxx_dep, yyy_dep, annotations)
 
 
+def draw_data_from_json(data_path: Path):
+    with data_path.open("r") as data_fh:
+        data_data = json.load(data_fh)
+    node_list: List[Node] = build_node_list(data_data["nodes"])
+    graph_from_node_list(node_list)
+
+    fig = plt.figure(figsize=[12.8, 9.6])
+    ax = fig.add_subplot()
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+    for tick in ax.get_xmajorticklabels():
+        tick.set_visible(False)
+    for tick in ax.get_ymajorticklabels():
+        tick.set_visible(False)
+    plt.xticks([])
+    plt.yticks([])
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    # setup_plot(ax)
+    plt.title(data_data["title"], weight="bold", fontsize=14)
+    # shift visibility
+    for node in node_list:
+        node.visibility_rescaled += VISIBILITY_BOOST
+    annotations = plot_annotate_nodes(node_list, ax)
+    xxx_dep, yyy_dep = build_connecting_lines(node_list)
+    plot_connecting_lines(xxx_dep, yyy_dep)
+    move_annotations_away(xxx_dep, yyy_dep, annotations)
+
+    # TODO
+    # - lines grey, less emphasis
+    # - icons bigger
+
+
 if __name__ == "__main__":
 
     data_dir = Path("lul_algo")
-    graph_path = data_dir / "4_api_n_TDD.json"
-    draw_wardley_map_from_json(graph_path)
+    data_path = data_dir / "0_initial_graph.json"
+    draw_data_from_json(data_path)
 
-    image_path = data_dir / (graph_path.stem+".svg")
+    image_path = data_dir / (data_path.stem+".svg")
     plt.savefig(image_path)
 
     plt.show()
