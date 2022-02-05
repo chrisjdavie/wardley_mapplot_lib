@@ -219,9 +219,10 @@ def draw_data_from_json(data_path: Path):
 
 if __name__ == "__main__":
 
-    data_dir = Path("lul_algo")
-    data_path = data_dir / "0_initial_graph.json"
-    draw_data_from_json(data_path)
+    data_dir = Path("fusion")
+    data_path = data_dir / "simplified.json"
+    # draw_data_from_json(data_path)
+    draw_wardley_map_from_json(data_path)
 
     image_path = data_dir / (data_path.stem+".svg")
     plt.savefig(image_path)

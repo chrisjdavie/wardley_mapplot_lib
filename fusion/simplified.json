@@ -1,0 +1,73 @@
+{
+    "title": "Simplified Inertial Fusion Research",
+    "nodes": [
+        {
+            "code": "NIF",
+            "title": "Fusion Power Plant \n(Experimental Facilities)",
+            "type": "Node",
+            "dependencies": [
+                "Laser",
+                "Targets",
+                "PP",
+                "Struct"
+            ],
+            "visibility": 1,
+            "evolution": 0.1,
+            "arrow": {
+                "evolution": 0.2,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Laser",
+            "title": "Laser \nSystem",
+            "type": "Node",
+            "dependencies": [
+                "Struct",
+                "PP"
+            ],
+            "visibility": 2,
+            "evolution": 0.5,
+            "arrow": {
+                "evolution": 0.7,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "PP",
+            "title": "IFE Plasma \nPhysics",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2.2,
+            "evolution": 1.1,
+            "arrow": {
+                "evolution": 1.7,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Targets",
+            "title": "Targets",
+            "type": "Node",
+            "dependencies": [
+                "PP"
+            ],
+            "visibility": 3,
+            "evolution": 0.2,
+            "arrow": {
+                "evolution": 0.25,
+                "type": "driven"
+            }
+        },
+        {
+            "code": "Struct",
+            "title": "Structure",
+            "type": "Node",
+            "dependencies": [
+                "Targets"
+            ],
+            "visibility": 4,
+            "evolution": 0.1
+        }
+    ]
+}
