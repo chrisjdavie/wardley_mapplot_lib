@@ -2,6 +2,7 @@
 * where it needs to be
 * - arrows to where it should be
 * keys for arrow colours
+* grey all arrows to plasma physics
 * exapanded based on simplified
 # Blog post idea
 * Simplified

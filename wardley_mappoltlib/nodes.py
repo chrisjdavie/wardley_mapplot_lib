@@ -18,10 +18,18 @@ class Arrow:
     An arrow pointing away from a Node in a Wardley Map
     """
     evolution: float
+    evolution_start: float
     type: str
 
+    @classmethod
+    def from_dict(cls, data: ArrowDataType, evolution_start):
+        _data_to_modify = deepcopy(data)
+        if "evolution_start" not in data:
+            _data_to_modify["evolution_start"] = evolution_start
+        return cls(**_data_to_modify)
 
-NodeDataType = Dict[str, Union[str, float, List[str], ArrowDataType]]
+
+NodeDataType = Dict[str, Union[str, float, List[str], List[ArrowDataType]]]
 
 
 @dataclass
@@ -36,7 +44,8 @@ class Node:
     dependencies: List[str]
     visibility: float
     evolution: float
-    arrow: Optional[Arrow]
+    # arrows: Optional[Arrow]
+    arrows: List[Arrow] = field(default_factory=list)
 
     visibility_rescaled: float = -1.0
 
@@ -46,11 +55,17 @@ class Node:
     @classmethod
     def from_dict(cls, data: NodeDataType) -> Node:
         _data_to_modify = deepcopy(data)
-        arrow: Optional[Arrow] = None
-        if "arrow" in _data_to_modify:
-            if arrow_data := _data_to_modify.pop("arrow"):
-                arrow = Arrow(**arrow_data)
-        return cls(**_data_to_modify, arrow=arrow)
+        arrows: List[Arrow] = []
+        if "arrows" in _data_to_modify:
+            if arrows_data := _data_to_modify.pop("arrows"):
+                arrows = [
+                    Arrow.from_dict(
+                        arrow_datum,
+                        evolution_start=_data_to_modify["evolution"]
+                    )
+                    for arrow_datum in arrows_data
+                ]
+        return cls(**_data_to_modify, arrows=arrows)
 
 
 def build_node_list(graph_data: List[NodeDataType]) -> List[Node]:

@@ -1,18 +1,35 @@
+from dataclasses import dataclass
 import json
 from pathlib import Path
 from typing import List, Tuple
 
 from adjustText import adjust_text
 from matplotlib import pyplot as plt
+from matplotlib.lines import Line2D
+from matplotlib.legend_handler import HandlerLine2D, HandlerNpoints
 import matplotlib.patches as mpatches
 import numpy as np
 from scipy import interpolate
 
 from wardley_mappoltlib.nodes import \
-    Node, build_node_list, graph_from_node_list
+    Arrow, Node, build_node_list, graph_from_node_list
 
 
 VISIBILITY_BOOST = 0.05
+
+
+@dataclass
+class ArrowStyle:
+    color: str
+    linestyle: str
+    label: str = ""
+
+
+ARROW_STYLES = {
+    "driven": ArrowStyle("red", ":", "Evolution driven by research"),
+    "required": ArrowStyle("green", "--", "Evolution required for working reactor"),
+    "inertia": ArrowStyle("red", "-")
+}
 
 
 def setup_plot(ax):
@@ -75,42 +92,105 @@ def plot_annotate_nodes(node_list: List[Node], ax):
     return annotations
 
 
+class InertiaArrow(Line2D):
+
+    def __init__(self, arrow: Arrow, visibility: float):
+        # yes I know
+        arrow_style: str = ARROW_STYLES[arrow.type]
+        super().__init__(
+            [arrow.evolution_start, arrow.evolution],
+            [visibility, visibility],
+            color=arrow_style.color,
+            linestyle=arrow_style.linestyle,
+            label=arrow_style.label,
+            marker=">",
+            markevery=(1, 1),
+        )
+
+
+class HandlerWplArrow(HandlerNpoints):
+
+    def __init__(self, marker_pad=0.3, numpoints=None, **kw) -> None:
+        super().__init__(marker_pad=marker_pad, numpoints=numpoints, **kw)
+
+    def create_artists(
+            self, legend, orig_handle: InertiaArrow,
+            xdescent, ydescent, width, height, fontsize,
+            trans):
+
+        xdata, xdata_marker = self.get_xdata(legend, xdescent, ydescent,
+                                             width, height, fontsize)
+        ydata = np.full_like(xdata, (height - ydescent) / 2)
+        legline = Line2D(xdata, ydata, markevery=orig_handle.get_markevery())
+
+        self.update_prop(legline, orig_handle, legend)
+
+        legline.set_transform(trans)
+
+        return [legline, legline]
+
+
 def plot_arrow(node_list: List[Node], ax):
 
     for node in node_list:
-        if node.arrow:
-            plt.hlines(
-                node.visibility_rescaled,
-                node.evolution,
-                node.arrow.evolution,
-                color="red",
-                linestyles=":"
-            )
-            arrow = mpatches.FancyArrowPatch(
-                (node.arrow.evolution, node.visibility_rescaled),
-                (node.arrow.evolution + 0.01, node.visibility_rescaled),
-                arrowstyle=mpatches.ArrowStyle.Fancy(
-                    head_length=8, head_width=6, tail_width=0.1),
-                color="red",
-                zorder=10
-                # linewidth=2
-            )
-            ax.add_patch(arrow)
-            if node.arrow.type == "inertia":
+        if node.arrows:
+            for arrow_data in node.arrows:
+                line = InertiaArrow(arrow_data, node.visibility_rescaled)
 
-                dist_back = 0.07
-                width = 0.02
-                height = 0.075
-                x_rect = node.arrow.evolution - dist_back - width
-                y_rect = node.visibility_rescaled - height/2
-                ax.add_patch(
-                    mpatches.Rectangle(
-                        (x_rect, y_rect),
-                        width,
-                        height,
-                        color="red"
-                    )
-                )
+                ax.add_line(line)
+
+    # for node in node_list:
+    #     if node.arrows:
+    #         for arrow_data in node.arrows:
+    #             arrow_style = ARROW_STYLES[arrow_data.type]
+
+    #             color = "red"
+    #             linestyle = ":"
+    #             if arrow_data.type == "required":
+    #                 color = "green"
+    #                 linestyle = "--"
+
+    #             plt.hlines(
+    #                 node.visibility_rescaled,
+    #                 arrow_data.evolution_start,
+    #                 arrow_data.evolution,
+    #                 color=arrow_style.color,
+    #                 linestyles=arrow_style.linestyle
+    #             )
+    #             arrow = mpatches.FancyArrowPatch(
+    #                 (arrow_data.evolution, node.visibility_rescaled),
+    #                 (arrow_data.evolution + 0.01, node.visibility_rescaled),
+    #                 arrowstyle=mpatches.ArrowStyle.Fancy(
+    #                     head_length=8, head_width=6, tail_width=0.1),
+    #                 color=arrow_style.color,
+    #                 zorder=10
+    #                 # linewidth=2
+    #             )
+    #             ax.add_patch(arrow)
+    #             # ax.annotate(
+    #             #     '',
+    #             #     xy=(arrow_data.evolution_start, node.visibility_rescaled),
+    #             #     xytext=(
+    #             #         arrow_data.evolution_start,
+    #             #         node.visibility_rescaled
+    #             #     ),
+    #             #     arrowprops={"arrowstyle": "->"}
+    #             # )
+    #             if arrow_data.type == "inertia":
+
+    #                 dist_back = 0.07
+    #                 width = 0.02
+    #                 height = 0.075
+    #                 x_rect = arrow_data.evolution - dist_back - width
+    #                 y_rect = node.visibility_rescaled - height/2
+    #                 ax.add_patch(
+    #                     mpatches.Rectangle(
+    #                         (x_rect, y_rect),
+    #                         width,
+    #                         height,
+    #                         color=arrow_style.color
+    #                     )
+    #                 )
 
 
 def build_connecting_lines(node_list: List[Node]
@@ -156,10 +236,12 @@ def move_annotations_away(
     yy_pts = np.concatenate(yy_routes)
 
     # shift the annotations away from those points
-    adjust_text(annotations,
-                x=xx_pts,
-                y=yy_pts,
-                expand_points=(1.1, 1.2))
+    adjust_text(
+        annotations,
+        x=xx_pts,
+        y=yy_pts,
+        expand_points=(1.1, 1.2)
+    )
 
 
 def draw_wardley_map_from_json(data_path: Path):
@@ -181,6 +263,7 @@ def draw_wardley_map_from_json(data_path: Path):
     xxx_dep, yyy_dep = build_connecting_lines(node_list)
     plot_connecting_lines(xxx_dep, yyy_dep)
     move_annotations_away(xxx_dep, yyy_dep, annotations)
+    return ax, node_list
 
 
 def draw_data_from_json(data_path: Path):
@@ -222,9 +305,16 @@ if __name__ == "__main__":
     data_dir = Path("fusion")
     data_path = data_dir / "simplified.json"
     # draw_data_from_json(data_path)
-    draw_wardley_map_from_json(data_path)
+    ax, node_list = draw_wardley_map_from_json(data_path)
 
     image_path = data_dir / (data_path.stem+".svg")
-    plt.savefig(image_path)
 
-    plt.show()
+    lengend_arrows = [
+        InertiaArrow(Arrow(0, 0, "driven"), 0),
+        InertiaArrow(Arrow(0, 0, "required"), 0)
+    ]
+
+    ax.legend(handles=lengend_arrows, handler_map={
+              InertiaArrow: HandlerWplArrow()})
+
+    plt.savefig(image_path)

@@ -13,10 +13,17 @@
             ],
             "visibility": 1,
             "evolution": 0.1,
-            "arrow": {
-                "evolution": 0.2,
-                "type": "driven"
-            }
+            "arrows": [
+                {
+                    "evolution": 0.2,
+                    "type": "driven"
+                },
+                {
+                    "evolution_start": 0.2,
+                    "evolution": 1.0,
+                    "type": "required"
+                }
+            ]
         },
         {
             "code": "Laser",
@@ -28,10 +35,17 @@
             ],
             "visibility": 2,
             "evolution": 0.5,
-            "arrow": {
-                "evolution": 0.7,
-                "type": "driven"
-            }
+            "arrows": [
+                {
+                    "evolution": 0.7,
+                    "type": "driven"
+                },
+                {
+                    "evolution_start": 0.7,
+                    "evolution": 1.0,
+                    "type": "required"
+                }
+            ]
         },
         {
             "code": "PP",
@@ -40,10 +54,12 @@
             "dependencies": [],
             "visibility": 2.2,
             "evolution": 1.1,
-            "arrow": {
-                "evolution": 1.7,
-                "type": "driven"
-            }
+            "arrows": [
+                {
+                    "evolution": 1.7,
+                    "type": "driven"
+                }
+            ]
         },
         {
             "code": "Targets",
@@ -54,10 +70,17 @@
             ],
             "visibility": 3,
             "evolution": 0.2,
-            "arrow": {
-                "evolution": 0.25,
-                "type": "driven"
-            }
+            "arrows": [
+                {
+                    "evolution": 0.25,
+                    "type": "driven"
+                },
+                {
+                    "evolution_start": 0.25,
+                    "evolution": 1.0,
+                    "type": "required"
+                }
+            ]
         },
         {
             "code": "Struct",
@@ -67,7 +90,13 @@
                 "Targets"
             ],
             "visibility": 4,
-            "evolution": 0.1
+            "evolution": 0.1,
+            "arrows": [
+                {
+                    "evolution": 1.0,
+                    "type": "required"
+                }
+            ]
         }
     ]
 }
