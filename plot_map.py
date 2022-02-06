@@ -94,17 +94,22 @@ def plot_annotate_nodes(node_list: List[Node], ax):
 
 class InertiaArrow(Line2D):
 
-    def __init__(self, arrow: Arrow, visibility: float):
-        # yes I know
-        arrow_style: str = ARROW_STYLES[arrow.type]
+    def __init__(self, xdata, ydata, **kw):
         super().__init__(
-            [arrow.evolution_start, arrow.evolution],
-            [visibility, visibility],
-            color=arrow_style.color,
-            linestyle=arrow_style.linestyle,
-            label=arrow_style.label,
+            xdata,
+            ydata,
             marker=">",
             markevery=(1, 1),
+            **kw
+        )
+
+    @classmethod
+    def from_arrow(cls, arrow: Arrow, visibility):
+        arrow_style: str = ARROW_STYLES[arrow.type]
+        return cls(
+            [arrow.evolution_start, arrow.evolution],
+            [visibility, visibility],
+            **arrow_style.__dict__
         )
 
 
@@ -135,7 +140,8 @@ def plot_arrow(node_list: List[Node], ax):
     for node in node_list:
         if node.arrows:
             for arrow_data in node.arrows:
-                line = InertiaArrow(arrow_data, node.visibility_rescaled)
+                line = InertiaArrow.from_arrow(
+                    arrow_data, node.visibility_rescaled)
 
                 ax.add_line(line)
 
@@ -310,11 +316,14 @@ if __name__ == "__main__":
     image_path = data_dir / (data_path.stem+".svg")
 
     lengend_arrows = [
-        InertiaArrow(Arrow(0, 0, "driven"), 0),
-        InertiaArrow(Arrow(0, 0, "required"), 0)
+        InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
+        InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0)
     ]
 
-    ax.legend(handles=lengend_arrows, handler_map={
-              InertiaArrow: HandlerWplArrow()})
+    ax.legend(
+        handles=lengend_arrows,
+        handler_map={
+            InertiaArrow: HandlerWplArrow()
+        })
 
     plt.savefig(image_path)
