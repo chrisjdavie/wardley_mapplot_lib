@@ -28,6 +28,7 @@
         {
             "code": "Laser",
             "title": "Laser \nSystem",
+            "subcat": "Laser",
             "type": "Node",
             "dependencies": [
                 "Struct",
@@ -54,6 +55,7 @@
             "dependencies": [],
             "visibility": 2.2,
             "evolution": 1.1,
+            "optional": true,
             "arrows": [
                 {
                     "evolution": 1.7,
@@ -64,6 +66,7 @@
         {
             "code": "Targets",
             "title": "Targets",
+            "subcat": "Targets",
             "type": "Node",
             "dependencies": [
                 "PP"
@@ -85,6 +88,7 @@
         {
             "code": "Struct",
             "title": "Structure",
+            "subcat": "Struct",
             "type": "Node",
             "dependencies": [
                 "Targets"

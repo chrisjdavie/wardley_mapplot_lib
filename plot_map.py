@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 import json
 from pathlib import Path
-from typing import List, Tuple
+from typing import Dict, List, Tuple
+from xmlrpc.client import Boolean
 
 from adjustText import adjust_text
 from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.legend_handler import HandlerLine2D, HandlerNpoints
-import matplotlib.patches as mpatches
 import numpy as np
 from scipy import interpolate
 
@@ -77,7 +77,14 @@ def plot_annotate_nodes(node_list: List[Node], ax):
     xx = [node.evolution for node in node_list]
     yy = [node.visibility_rescaled for node in node_list]
 
-    plt.scatter(xx, yy, c="white", edgecolors="black")
+    plt.scatter(
+        xx,
+        yy,
+        c="purple",
+        edgecolors="purple",
+        marker="*",
+        s=150
+    )
 
     text = [node.title for node in node_list]
     annotations = []
@@ -145,62 +152,9 @@ def plot_arrow(node_list: List[Node], ax):
 
                 ax.add_line(line)
 
-    # for node in node_list:
-    #     if node.arrows:
-    #         for arrow_data in node.arrows:
-    #             arrow_style = ARROW_STYLES[arrow_data.type]
-
-    #             color = "red"
-    #             linestyle = ":"
-    #             if arrow_data.type == "required":
-    #                 color = "green"
-    #                 linestyle = "--"
-
-    #             plt.hlines(
-    #                 node.visibility_rescaled,
-    #                 arrow_data.evolution_start,
-    #                 arrow_data.evolution,
-    #                 color=arrow_style.color,
-    #                 linestyles=arrow_style.linestyle
-    #             )
-    #             arrow = mpatches.FancyArrowPatch(
-    #                 (arrow_data.evolution, node.visibility_rescaled),
-    #                 (arrow_data.evolution + 0.01, node.visibility_rescaled),
-    #                 arrowstyle=mpatches.ArrowStyle.Fancy(
-    #                     head_length=8, head_width=6, tail_width=0.1),
-    #                 color=arrow_style.color,
-    #                 zorder=10
-    #                 # linewidth=2
-    #             )
-    #             ax.add_patch(arrow)
-    #             # ax.annotate(
-    #             #     '',
-    #             #     xy=(arrow_data.evolution_start, node.visibility_rescaled),
-    #             #     xytext=(
-    #             #         arrow_data.evolution_start,
-    #             #         node.visibility_rescaled
-    #             #     ),
-    #             #     arrowprops={"arrowstyle": "->"}
-    #             # )
-    #             if arrow_data.type == "inertia":
-
-    #                 dist_back = 0.07
-    #                 width = 0.02
-    #                 height = 0.075
-    #                 x_rect = arrow_data.evolution - dist_back - width
-    #                 y_rect = node.visibility_rescaled - height/2
-    #                 ax.add_patch(
-    #                     mpatches.Rectangle(
-    #                         (x_rect, y_rect),
-    #                         width,
-    #                         height,
-    #                         color=arrow_style.color
-    #                     )
-    #                 )
-
 
 def build_connecting_lines(node_list: List[Node]
-                           ) -> Tuple[List[Tuple[float]]]:
+                           ) -> Tuple[List[Tuple[float]], List[Tuple[float]], List[bool]]:
     xxx_dep = [
         (node.evolution, child.evolution)
         for node in node_list for child in node.children
@@ -209,17 +163,26 @@ def build_connecting_lines(node_list: List[Node]
         (node.visibility_rescaled, child.visibility_rescaled)
         for node in node_list for child in node.children
     ]
-    return xxx_dep, yyy_dep
+    optional = [
+        (node.optional or child.optional) for node in node_list for child in node.children
+    ]
+    return xxx_dep, yyy_dep, optional
 
 
 def plot_connecting_lines(
-        xxx_dep: List[Tuple[float]], yyy_dep: List[Tuple[float]]) -> None:
+        xxx_dep: List[Tuple[float]],
+        yyy_dep: List[Tuple[float]],
+        optional: List[bool]
+) -> None:
 
-    for (x_node, x_child), (y_node, y_child) in zip(xxx_dep, yyy_dep):
+    for (x_node, x_child), (y_node, y_child), opt in zip(xxx_dep, yyy_dep, optional):
         plt.plot(
             [x_node, x_child],
             [y_node, y_child],
-            c="black", zorder=-1)
+            c="darkgrey" if opt else "black",
+            ls="-." if opt else "-",
+            zorder=-1
+        )
 
 
 def move_annotations_away(
@@ -266,8 +229,8 @@ def draw_wardley_map_from_json(data_path: Path):
         node.visibility_rescaled += VISIBILITY_BOOST
     annotations = plot_annotate_nodes(node_list, ax)
     plot_arrow(node_list, ax)
-    xxx_dep, yyy_dep = build_connecting_lines(node_list)
-    plot_connecting_lines(xxx_dep, yyy_dep)
+    xxx_dep, yyy_dep, optional = build_connecting_lines(node_list)
+    plot_connecting_lines(xxx_dep, yyy_dep, optional)
     move_annotations_away(xxx_dep, yyy_dep, annotations)
     return ax, node_list
 
@@ -297,7 +260,7 @@ def draw_data_from_json(data_path: Path):
     for node in node_list:
         node.visibility_rescaled += VISIBILITY_BOOST
     annotations = plot_annotate_nodes(node_list, ax)
-    xxx_dep, yyy_dep = build_connecting_lines(node_list)
+    xxx_dep, yyy_dep, _ = build_connecting_lines(node_list)
     plot_connecting_lines(xxx_dep, yyy_dep)
     move_annotations_away(xxx_dep, yyy_dep, annotations)
 
@@ -311,13 +274,21 @@ if __name__ == "__main__":
     data_dir = Path("fusion")
     data_path = data_dir / "simplified.json"
     # draw_data_from_json(data_path)
+    subcat_marker_map: Dict[str, str] = {
+        "Laser": {"marker": "^", "c": "firebrick"},
+        "Targets": {"marker": "s", "c": "blue"},
+        "Struct": {"marker": "*", "c": "purple"}
+    }
+
     ax, node_list = draw_wardley_map_from_json(data_path)
 
     image_path = data_dir / (data_path.stem+".svg")
 
     lengend_arrows = [
         InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
-        InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0)
+        InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
+        Line2D([], [], label="Necessary link for reactor"),
+        Line2D([], [], label="Less necessary", color="darkgrey", ls="-.")
     ]
 
     ax.legend(

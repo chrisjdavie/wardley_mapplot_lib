@@ -44,7 +44,8 @@ class Node:
     dependencies: List[str]
     visibility: float
     evolution: float
-    # arrows: Optional[Arrow]
+    subcat: Optional[str] = None
+    optional: bool = False
     arrows: List[Arrow] = field(default_factory=list)
 
     visibility_rescaled: float = -1.0
