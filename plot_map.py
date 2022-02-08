@@ -1,13 +1,14 @@
+from copy import copy
 from dataclasses import dataclass
 import json
 from pathlib import Path
+from turtle import fillcolor
 from typing import Dict, List, Tuple
-from xmlrpc.client import Boolean
 
 from adjustText import adjust_text
 from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
-from matplotlib.legend_handler import HandlerLine2D, HandlerNpoints
+from matplotlib.legend_handler import HandlerNpoints
 import numpy as np
 from scipy import interpolate
 
@@ -26,9 +27,8 @@ class ArrowStyle:
 
 
 ARROW_STYLES = {
-    "driven": ArrowStyle("red", ":", "Evolution driven by research"),
-    "required": ArrowStyle("green", "--", "Evolution required for working reactor"),
-    "inertia": ArrowStyle("red", "-")
+    "driven": ArrowStyle("C1", ":", "Evolution driven by research"),
+    "required": ArrowStyle("C0", "--", "Evolution required for working reactor")
 }
 
 
@@ -72,20 +72,41 @@ def setup_plot(ax):
     ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
 
 
-def plot_annotate_nodes(node_list: List[Node], ax):
+def plot_annotate_nodes(node_list: List[Node], ax, subcat_marker_map: Dict[str, str]):
     # Sort out axis points
-    xx = [node.evolution for node in node_list]
-    yy = [node.visibility_rescaled for node in node_list]
 
+    remaining: List[Node] = copy(node_list)
+
+    for subcat, marker_style in subcat_marker_map.items():
+
+        xx_subcat: List[Node] = [
+            node.evolution for node in node_list if node.subcat == subcat]
+        yy_subcat: List[Node] = [
+            node.visibility_rescaled for node in node_list if node.subcat == subcat]
+        for node in node_list:
+            if node.subcat == subcat:
+                remaining.remove(node)
+
+        plt.scatter(
+            xx_subcat,
+            yy_subcat,
+            **marker_style,
+            s=100
+        )
+
+    xx_remain: List[Node] = [node.evolution for node in remaining]
+    yy_remain: List[Node] = [node.visibility_rescaled for node in remaining]
+    print(xx_remain)
     plt.scatter(
-        xx,
-        yy,
-        c="purple",
-        edgecolors="purple",
-        marker="*",
-        s=150
+        xx_remain,
+        yy_remain,
+        c="white",
+        edgecolors="black",
+        s=100
     )
 
+    xx = [node.evolution for node in node_list]
+    yy = [node.visibility_rescaled for node in node_list]
     text = [node.title for node in node_list]
     annotations = []
 
@@ -213,7 +234,7 @@ def move_annotations_away(
     )
 
 
-def draw_wardley_map_from_json(data_path: Path):
+def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str]):
     with data_path.open("r") as data_fh:
         data_data = json.load(data_fh)
     node_list: List[Node] = build_node_list(data_data["nodes"])
@@ -223,11 +244,12 @@ def draw_wardley_map_from_json(data_path: Path):
     ax = fig.add_subplot()
 
     setup_plot(ax)
+
     plt.title(data_data["title"], weight="bold", fontsize=14)
     # shift visibility
     for node in node_list:
         node.visibility_rescaled += VISIBILITY_BOOST
-    annotations = plot_annotate_nodes(node_list, ax)
+    annotations = plot_annotate_nodes(node_list, ax, subcat_marker_map)
     plot_arrow(node_list, ax)
     xxx_dep, yyy_dep, optional = build_connecting_lines(node_list)
     plot_connecting_lines(xxx_dep, yyy_dep, optional)
@@ -275,12 +297,13 @@ if __name__ == "__main__":
     data_path = data_dir / "simplified.json"
     # draw_data_from_json(data_path)
     subcat_marker_map: Dict[str, str] = {
-        "Laser": {"marker": "^", "c": "firebrick"},
-        "Targets": {"marker": "s", "c": "blue"},
-        "Struct": {"marker": "*", "c": "purple"}
+        # , "edgecolors": "firebrick"},
+        "Laser": {"marker": "^", "c": "C2"},
+        "Targets": {"marker": "X", "c": "C3"},
+        "Struct": {"marker": "D", "c": "C4"}
     }
 
-    ax, node_list = draw_wardley_map_from_json(data_path)
+    ax, node_list = draw_wardley_map_from_json(data_path, subcat_marker_map)
 
     image_path = data_dir / (data_path.stem+".svg")
 
@@ -288,7 +311,10 @@ if __name__ == "__main__":
         InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
         InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
         Line2D([], [], label="Necessary link for reactor"),
-        Line2D([], [], label="Less necessary", color="darkgrey", ls="-.")
+        Line2D([], [], label="Less necessary link", color="darkgrey", ls="-.")
+    ] + [
+        Line2D([], [], label=subcat, **marker_style, ls="")
+        for subcat, marker_style in subcat_marker_map.items()
     ]
 
     ax.legend(

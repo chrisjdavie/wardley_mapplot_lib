@@ -75,11 +75,11 @@
             "evolution": 0.2,
             "arrows": [
                 {
-                    "evolution": 0.25,
+                    "evolution": 0.28,
                     "type": "driven"
                 },
                 {
-                    "evolution_start": 0.25,
+                    "evolution_start": 0.28,
                     "evolution": 1.0,
                     "type": "required"
                 }
