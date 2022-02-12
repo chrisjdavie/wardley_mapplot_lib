@@ -296,35 +296,36 @@ def draw_data_from_json(data_path: Path):
 if __name__ == "__main__":
 
     data_dir = Path("fusion")
-    data_path = data_dir / "simplified.json"
+    data_path = data_dir / "complex.json"
     # draw_data_from_json(data_path)
     subcat_marker_map: Dict[str, str] = {
         # , "edgecolors": "firebrick"},
         "Laser": {"marker": "^", "c": "C2"},
         "Targets": {"marker": "X", "c": "C3"},
-        "Struct": {"marker": "D", "c": "C4"}
+        "Struct": {"marker": "D", "c": "C4"},
+        "Plasma Physics": {"marker": "s", "c": "C5"}
     }
 
     ax, node_list = draw_wardley_map_from_json(data_path, subcat_marker_map)
 
     image_path = data_dir / (data_path.stem+".svg")
 
-    # lengend_arrows = [
-    #     InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
-    #     InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
-    #     Line2D([], [], label="Necessary link for reactor"),
-    #     Line2D([], [], label="Less necessary link", color="darkgrey", ls="-.")
-    # ] + [
-    #     Line2D([], [], label=subcat, **marker_style, ls="")
-    #     for subcat, marker_style in subcat_marker_map.items()
-    # ]
+    lengend_arrows = [
+        InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
+        InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
+        Line2D([], [], label="Necessary link for reactor"),
+        Line2D([], [], label="Less necessary link", color="darkgrey", ls="-.")
+    ] + [
+        Line2D([], [], label=subcat, **marker_style, ls="")
+        for subcat, marker_style in subcat_marker_map.items()
+    ]
 
-    # ax.legend(
-    #     handles=lengend_arrows,
-    #     handler_map={
-    #         InertiaArrow: HandlerWplArrow()
-    #     },
-    #     prop={"size": 12}
-    # )
+    ax.legend(
+        handles=lengend_arrows,
+        handler_map={
+            InertiaArrow: HandlerWplArrow()
+        },
+        prop={"size": 12}
+    )
 
     plt.savefig(image_path)

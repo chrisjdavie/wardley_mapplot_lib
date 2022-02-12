@@ -31,8 +31,9 @@
             "subcat": "Laser",
             "type": "Node",
             "dependencies": [
-                "Struct",
-                "PP"
+                "Driver",
+                "Optics",
+                "LPI"
             ],
             "visibility": 2,
             "evolution": 0.5,
@@ -49,11 +50,40 @@
             ]
         },
         {
+            "code": "Driver",
+            "title": "Driver",
+            "subcat": "Laser",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2.5,
+            "evolution": 0.7
+        },
+        {
+            "code": "Optics",
+            "title": "Optics",
+            "subcat": "Laser",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2.5,
+            "evolution": 0.2
+        },
+        {
+            "code": "LPI",
+            "title": "Laser-Plasma Interactions",
+            "subcat": "Plasma Physics",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2.5,
+            "evolution": 1.2
+        },
+        {
             "code": "PP",
             "title": "IFE Plasma \nPhysics",
             "type": "Node",
             "subcat": "Plasma Physics",
-            "dependencies": [],
+            "dependencies": [
+                "LPI"
+            ],
             "visibility": 2.2,
             "evolution": 1.1,
             "optional": true,
