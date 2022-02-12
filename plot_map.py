@@ -38,12 +38,13 @@ def setup_plot(ax):
 
     Kinda janky and probably not super portable, but works for this use case
     """
-    plt.xlabel("Evolution", weight="bold")
+    plt.xlabel("Evolution", weight="bold", size=14)
     plt.xlim([0, 4])
     plt.xticks(
         [0, 1, 2, 3],
         ["Genesis", "Custom Built",
-            "Product (+ rental)", "Commodity (+ utility)"]
+            "Product (+ rental)", "Commodity (+ utility)"],
+        size=12
     )
     for tick in ax.get_xmajorticklabels():
         tick.set_horizontalalignment("left")
@@ -55,12 +56,13 @@ def setup_plot(ax):
 
     ax.spines["top"].set_visible(False)
 
-    plt.ylabel("Value Chain", weight="bold")
+    plt.ylabel("Value Chain", weight="bold", size=14)
     plt.ylim([0, 1.0 + 2*VISIBILITY_BOOST])
 
     plt.yticks(
         [0, 1],
-        ["Invisible", "Visible"]
+        ["Invisible", "Visible"],
+        size=12
     )
     for tick in ax.get_ymajorticklabels():
         tick.set_rotation(90)
@@ -112,7 +114,7 @@ def plot_annotate_nodes(node_list: List[Node], ax, subcat_marker_map: Dict[str, 
 
     for x_i, y_i, t_i in zip(xx, yy, text):
         ann = ax.annotate(
-            t_i, (x_i, y_i - 0.01), size=12, ha="right", va="bottom")
+            t_i, (x_i, y_i - 0.01), size=14, ha="left", va="bottom")
         annotations.append(
             ann
         )
@@ -253,7 +255,7 @@ def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str
     plot_arrow(node_list, ax)
     xxx_dep, yyy_dep, optional = build_connecting_lines(node_list)
     plot_connecting_lines(xxx_dep, yyy_dep, optional)
-    move_annotations_away(xxx_dep, yyy_dep, annotations)
+    # move_annotations_away(xxx_dep, yyy_dep, annotations)
     return ax, node_list
 
 
@@ -307,20 +309,22 @@ if __name__ == "__main__":
 
     image_path = data_dir / (data_path.stem+".svg")
 
-    lengend_arrows = [
-        InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
-        InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
-        Line2D([], [], label="Necessary link for reactor"),
-        Line2D([], [], label="Less necessary link", color="darkgrey", ls="-.")
-    ] + [
-        Line2D([], [], label=subcat, **marker_style, ls="")
-        for subcat, marker_style in subcat_marker_map.items()
-    ]
+    # lengend_arrows = [
+    #     InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
+    #     InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
+    #     Line2D([], [], label="Necessary link for reactor"),
+    #     Line2D([], [], label="Less necessary link", color="darkgrey", ls="-.")
+    # ] + [
+    #     Line2D([], [], label=subcat, **marker_style, ls="")
+    #     for subcat, marker_style in subcat_marker_map.items()
+    # ]
 
-    ax.legend(
-        handles=lengend_arrows,
-        handler_map={
-            InertiaArrow: HandlerWplArrow()
-        })
+    # ax.legend(
+    #     handles=lengend_arrows,
+    #     handler_map={
+    #         InertiaArrow: HandlerWplArrow()
+    #     },
+    #     prop={"size": 12}
+    # )
 
     plt.savefig(image_path)
