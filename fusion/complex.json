@@ -7,7 +7,7 @@
             "type": "Node",
             "dependencies": [
                 "Laser",
-                "Targets",
+                "Pellets",
                 "PP",
                 "Struct"
             ],
@@ -17,11 +17,6 @@
                 {
                     "evolution": 0.2,
                     "type": "driven"
-                },
-                {
-                    "evolution_start": 0.2,
-                    "evolution": 1.0,
-                    "type": "required"
                 }
             ]
         },
@@ -41,11 +36,6 @@
                 {
                     "evolution": 0.7,
                     "type": "driven"
-                },
-                {
-                    "evolution_start": 0.7,
-                    "evolution": 1.0,
-                    "type": "required"
                 }
             ]
         },
@@ -63,7 +53,9 @@
             "title": "Optics",
             "subcat": "Laser",
             "type": "Node",
-            "dependencies": [],
+            "dependencies": [
+                "HR"
+            ],
             "visibility": 2.5,
             "evolution": 0.2
         },
@@ -82,7 +74,8 @@
             "type": "Node",
             "subcat": "Plasma Physics",
             "dependencies": [
-                "LPI"
+                "LPI",
+                "Pellets"
             ],
             "visibility": 2.2,
             "evolution": 1.1,
@@ -95,12 +88,14 @@
             ]
         },
         {
-            "code": "Targets",
-            "title": "Targets",
+            "code": "Pellets",
+            "title": "Fuel pellet",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
-                "PP"
+                "Injection",
+                "Manufacture",
+                "Storage"
             ],
             "visibility": 3,
             "evolution": 0.2,
@@ -108,13 +103,68 @@
                 {
                     "evolution": 0.28,
                     "type": "driven"
-                },
-                {
-                    "evolution_start": 0.28,
-                    "evolution": 1.0,
-                    "type": "required"
                 }
             ]
+        },
+        {
+            "code": "Injection",
+            "title": "Pellet injection",
+            "subcat": "Targets",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 3.2,
+            "evolution": 0.05
+        },
+        {
+            "code": "Storage",
+            "title": "Storage and Manufacture",
+            "subcat": "Targets",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 3.2,
+            "evolution": 0.6
+        },
+        {
+            "code": "Manufacture",
+            "title": "Pellet manufacture",
+            "subcat": "Targets",
+            "type": "Node",
+            "dependencies": [
+                "TiMk"
+            ],
+            "visibility": 3.4,
+            "evolution": 0.05
+        },
+        {
+            "code": "TiMk",
+            "title": "Tritium Market",
+            "subcat": "Targets",
+            "type": "Node",
+            "dependencies": [
+                "TiPd"
+            ],
+            "visibility": 3.6,
+            "evolution": 0.4
+        },
+        {
+            "code": "TiPd",
+            "title": "Tritium Production",
+            "subcat": "Targets",
+            "type": "Node",
+            "dependencies": [
+                "Lithium"
+            ],
+            "visibility": 3.8,
+            "evolution": 1.5
+        },
+        {
+            "code": "Lithium",
+            "title": "Lithium market",
+            "subcat": "Targets",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 4.0,
+            "evolution": 3.2
         },
         {
             "code": "Struct",
@@ -122,16 +172,19 @@
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [
-                "Targets"
+                "Pellets"
             ],
             "visibility": 4,
-            "evolution": 0.1,
-            "arrows": [
-                {
-                    "evolution": 1.0,
-                    "type": "required"
-                }
-            ]
+            "evolution": 0.1
+        },
+        {
+            "code": "HR",
+            "title": "Heat \nRegulation",
+            "subcat": "Struct",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 4.5,
+            "evolution": 0.4
         }
     ]
 }
