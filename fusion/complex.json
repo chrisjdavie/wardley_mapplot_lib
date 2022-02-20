@@ -28,7 +28,8 @@
             "dependencies": [
                 "Driver",
                 "Optics",
-                "LPI"
+                "LPI",
+                "Pellets"
             ],
             "visibility": 2,
             "evolution": 0.5,
@@ -54,7 +55,8 @@
             "subcat": "Laser",
             "type": "Node",
             "dependencies": [
-                "HR"
+                "HR",
+                "RadWaste"
             ],
             "visibility": 2.5,
             "evolution": 0.2
@@ -66,7 +68,14 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 2.5,
-            "evolution": 1.2
+            "evolution": 1.2,
+            "optional": true,
+            "arrows": [
+                {
+                    "evolution": 1.8,
+                    "type": "driven"
+                }
+            ]
         },
         {
             "code": "PP",
@@ -89,7 +98,7 @@
         },
         {
             "code": "Pellets",
-            "title": "Fuel pellet",
+            "title": "Pellet Design",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
@@ -98,10 +107,10 @@
                 "Storage"
             ],
             "visibility": 3,
-            "evolution": 0.2,
+            "evolution": 0.4,
             "arrows": [
                 {
-                    "evolution": 0.28,
+                    "evolution": 0.5,
                     "type": "driven"
                 }
             ]
@@ -111,13 +120,15 @@
             "title": "Pellet injection",
             "subcat": "Targets",
             "type": "Node",
-            "dependencies": [],
+            "dependencies": [
+                "ConSys"
+            ],
             "visibility": 3.2,
             "evolution": 0.05
         },
         {
             "code": "Storage",
-            "title": "Storage and Manufacture",
+            "title": "Storage",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [],
@@ -172,10 +183,20 @@
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [
-                "Pellets"
+                "Pellets",
+                "RadWaste"
             ],
             "visibility": 4,
             "evolution": 0.1
+        },
+        {
+            "code": "RadWaste",
+            "title": "Radioactive waste\nmanagement",
+            "subcat": "Struct",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 4.2,
+            "evolution": 1.3
         },
         {
             "code": "HR",
@@ -183,8 +204,58 @@
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [],
-            "visibility": 4.5,
+            "visibility": 4.8,
             "evolution": 0.4
+        },
+        {
+            "code": "FW",
+            "title": "First \nWall",
+            "type": "Node",
+            "subcat": "Struct",
+            "dependencies": [
+                "ConSys",
+                "HR",
+                "Optics"
+            ],
+            "visibility": 4.4,
+            "evolution": 0.5,
+            "arrows": [
+                {
+                    "evolution": 0.6,
+                    "type": "driven"
+                }
+            ]
+        },
+        {
+            "code": "FW",
+            "title": "Breeder Blanket",
+            "type": "Node",
+            "subcat": "Struct",
+            "dependencies": [
+                "Struct"
+            ],
+            "visibility": 4.4,
+            "evolution": 0.05
+        },
+        {
+            "code": "ConSys",
+            "title": "Control\nSystems",
+            "type": "Node",
+            "subcat": "Targets",
+            "dependencies": [],
+            "visibility": 4.6,
+            "evolution": 0.5
+        },
+        {
+            "code": "Steel",
+            "title": "Steel",
+            "type": "Node",
+            "subcat": "Struct",
+            "dependencies": [
+                "Struct"
+            ],
+            "visibility": 4.4,
+            "evolution": 0.9
         }
     ]
 }
