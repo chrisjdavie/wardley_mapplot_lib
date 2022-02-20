@@ -1,8 +1,3 @@
-* exapanded based on simplified
-* copy simplified
-* add in nodes one by one
-* ensure carry lines
-* split out target design
 * add in NIF at the top (informs PP, optics, drivers, )
 * add in breeder blankets (separate from first wall)
 * grey out plasma physics links
