@@ -1,6 +1,4 @@
 * add in NIF at the top (informs PP, optics, drivers, )
-* add in breeder blankets (separate from first wall)
-* grey out plasma physics links
 * HR links to driver?
 * Better labeling of icons in complex plot
 * sqaush top - top is empty, bottom is busy
@@ -16,6 +14,7 @@
 * Why I'm being so uncharitable
 * * Ephasise position is based on *towards an IFE power plant*
 * * * "Building laser physics experiments" should be more evolved
+* "Value Chain" in this context? (I'm def using these lines as "this won't work without this, dependencies, but tied to value chain - "this allowing that to work" is def a value add)
 * Detailed
 * highlight the major radiation issues (rep rate, cooling, debris, partial burn, energetic neutrons)
 * * show the examples these hurts (first wall, optics, targets (speed), steel, Tritium market) with difficulties
