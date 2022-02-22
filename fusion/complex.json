@@ -3,7 +3,7 @@
     "nodes": [
         {
             "code": "NIF",
-            "title": "Fusion Power Plant \n(Experimental Facilities)",
+            "title": "Fusion Power Plant\n(Experimental Facilities)",
             "type": "Node",
             "dependencies": [
                 "Laser",
@@ -22,7 +22,7 @@
         },
         {
             "code": "Laser",
-            "title": "Laser \nSystem",
+            "title": "Laser\nSystem",
             "subcat": "Laser",
             "type": "Node",
             "dependencies": [
@@ -31,7 +31,7 @@
                 "LPI",
                 "Pellets"
             ],
-            "visibility": 2,
+            "visibility": 1.2,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -45,8 +45,10 @@
             "title": "Driver",
             "subcat": "Laser",
             "type": "Node",
-            "dependencies": [],
-            "visibility": 2.5,
+            "dependencies": [
+                "HR"
+            ],
+            "visibility": 1.5,
             "evolution": 0.7
         },
         {
@@ -58,16 +60,16 @@
                 "HR",
                 "RadWaste"
             ],
-            "visibility": 2.5,
+            "visibility": 1.5,
             "evolution": 0.2
         },
         {
             "code": "LPI",
-            "title": "Laser-Plasma Interactions",
+            "title": "Laser-Plasma\nInteractions",
             "subcat": "Plasma Physics",
             "type": "Node",
             "dependencies": [],
-            "visibility": 2.5,
+            "visibility": 1.5,
             "evolution": 1.2,
             "optional": true,
             "arrows": [
@@ -79,14 +81,14 @@
         },
         {
             "code": "PP",
-            "title": "IFE Plasma \nPhysics",
+            "title": "IFE Plasma\nPhysics",
             "type": "Node",
             "subcat": "Plasma Physics",
             "dependencies": [
                 "LPI",
                 "Pellets"
             ],
-            "visibility": 2.2,
+            "visibility": 1.2,
             "evolution": 1.1,
             "optional": true,
             "arrows": [
@@ -98,15 +100,15 @@
         },
         {
             "code": "Pellets",
-            "title": "Pellet Design",
+            "title": "Pellet\nDesign",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
                 "Injection",
-                "Manufacture",
+                "PelPro",
                 "Storage"
             ],
-            "visibility": 3,
+            "visibility": 1.8,
             "evolution": 0.4,
             "arrows": [
                 {
@@ -117,64 +119,64 @@
         },
         {
             "code": "Injection",
-            "title": "Pellet injection",
+            "title": "Pellet\ninjection",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
                 "ConSys"
             ],
-            "visibility": 3.2,
+            "visibility": 2.1,
             "evolution": 0.05
         },
         {
             "code": "Storage",
-            "title": "Storage",
+            "title": "Pellet\nStorage",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [],
-            "visibility": 3.2,
+            "visibility": 2.1,
             "evolution": 0.6
         },
         {
-            "code": "Manufacture",
-            "title": "Pellet manufacture",
+            "code": "PelPro",
+            "title": "Pellet\nproduction",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
                 "TiMk"
             ],
-            "visibility": 3.4,
+            "visibility": 2.4,
             "evolution": 0.05
         },
         {
             "code": "TiMk",
-            "title": "Tritium Market",
+            "title": "Tritium\nMarket",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
                 "TiPd"
             ],
-            "visibility": 3.6,
-            "evolution": 0.4
+            "visibility": 2.6,
+            "evolution": 0.5
         },
         {
             "code": "TiPd",
-            "title": "Tritium Production",
+            "title": "Tritium\nProduction",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
                 "Lithium"
             ],
-            "visibility": 3.8,
+            "visibility": 2.8,
             "evolution": 1.5
         },
         {
             "code": "Lithium",
-            "title": "Lithium market",
+            "title": "Lithium\nmarket",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [],
-            "visibility": 4.0,
+            "visibility": 3.0,
             "evolution": 3.2
         },
         {
@@ -186,7 +188,7 @@
                 "Pellets",
                 "RadWaste"
             ],
-            "visibility": 4,
+            "visibility": 2.8,
             "evolution": 0.1
         },
         {
@@ -195,21 +197,21 @@
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [],
-            "visibility": 4.2,
+            "visibility": 3.0,
             "evolution": 1.3
         },
         {
             "code": "HR",
-            "title": "Heat \nRegulation",
+            "title": "Heat\nRegulation",
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [],
-            "visibility": 4.8,
-            "evolution": 0.1
+            "visibility": 3.4,
+            "evolution": 0.2
         },
         {
             "code": "FW",
-            "title": "First \nWall",
+            "title": "First\nWall",
             "type": "Node",
             "subcat": "Struct",
             "dependencies": [
@@ -217,7 +219,7 @@
                 "HR",
                 "Optics"
             ],
-            "visibility": 4.4,
+            "visibility": 3.2,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -228,13 +230,13 @@
         },
         {
             "code": "FW",
-            "title": "Breeder Blanket",
+            "title": "Breeder\nBlanket",
             "type": "Node",
             "subcat": "Struct",
             "dependencies": [
                 "Struct"
             ],
-            "visibility": 4.4,
+            "visibility": 3.2,
             "evolution": 0.05
         },
         {
@@ -243,7 +245,7 @@
             "type": "Node",
             "subcat": "Targets",
             "dependencies": [],
-            "visibility": 4.6,
+            "visibility": 3.6,
             "evolution": 0.5
         },
         {
@@ -254,7 +256,7 @@
             "dependencies": [
                 "Struct"
             ],
-            "visibility": 4.4,
+            "visibility": 3.2,
             "evolution": 0.9
         }
     ]

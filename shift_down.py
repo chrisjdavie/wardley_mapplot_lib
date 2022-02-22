@@ -1,13 +1,14 @@
 import json
 
 
-with open("data.json", "r") as fh:
+with open("fusion/complex.json", "r") as fh:
     data = json.load(fh)
 
-for item in data:
+for item in data["nodes"]:
     vis = item["visibility"]
-    if vis >= 8:
-        item["visibility"] += 3
+    if vis > 2.1 and item["subcat"] == "Targets":
+        item["visibility"] += 0.1
+        item["visibility"] = round(item["visibility"], 2)
 
-with open("data_move.json", "w") as fh:
+with open("fusion/complex.json", "w") as fh:
     json.dump(data, fh)

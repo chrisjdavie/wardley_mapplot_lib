@@ -202,8 +202,8 @@ def plot_connecting_lines(
         plt.plot(
             [x_node, x_child],
             [y_node, y_child],
-            c="darkgrey" if opt else "black",
-            ls="-." if opt else "-",
+            c="lightgrey" if opt else "darkgrey",
+            ls="-." if opt else "--",
             zorder=-1
         )
 
@@ -312,9 +312,9 @@ if __name__ == "__main__":
 
     lengend_arrows = [
         InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
-        InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
-        Line2D([], [], label="Necessary link for reactor"),
-        Line2D([], [], label="Less necessary link", color="darkgrey", ls="-.")
+        Line2D([], [], label="Necessary link for reactor",
+               color="darkgrey", ls="--"),
+        Line2D([], [], label="Less necessary link", color="lightgrey", ls="-.")
     ] + [
         Line2D([], [], label=subcat, **marker_style, ls="")
         for subcat, marker_style in subcat_marker_map.items()

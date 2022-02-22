@@ -1,10 +1,21 @@
-* add in NIF at the top (informs PP, optics, drivers, )
-* HR links to driver?
-* Better labeling of icons in complex plot
-* sqaush top - top is empty, bottom is busy
+* Colored lines
+* Same line colors to simplified
+* * lines
+* * legend
+* heat exchanger
+* * complex stretched
+* * complex clean
+* update simple
+* * heat exchanger
+* * turbine
+* * power grid
 # Blog post idea
 * 2 posts - one justification, one "Wardley Maps in scientific research"
 * * this entire thing is imaginary ("envisaged"), but mostly not my imagination
+* explain how I'm butchering the maps
+* * emphasising the "unique" to fusion, leaving off electrical grid feedback (disservice? feedback loop in the electrical grid is important)
+* * stretching it out, leaving off the rhs (links to above - the novel is the undiscovered)
+* A way of having a conversation about the problem - going "this is a problem", "this might be a solution" for each point, while I'm trying to communicate something about the agregate challenge that Wardley Maps do very well, overall picture
 * The goal of both major Fusion research projects is "will the fuel ignite?"
 * * Not a question asked of any other power project
 * Simplified
