@@ -5,10 +5,12 @@
 * heat exchanger
 * * complex stretched
 * * complex clean
+* regulation (links to Pellet Storage, Production, Ti Market, Ti Production and Radioactive waste management)
 * update simple
 * * heat exchanger
 * * turbine
 * * power grid
+* simplified; laser links to targets
 # Blog post idea
 * 2 posts - one justification, one "Wardley Maps in scientific research"
 * * this entire thing is imaginary ("envisaged"), but mostly not my imagination
@@ -16,10 +18,14 @@
 * * emphasising the "unique" to fusion, leaving off electrical grid feedback (disservice? feedback loop in the electrical grid is important)
 * * stretching it out, leaving off the rhs (links to above - the novel is the undiscovered)
 * A way of having a conversation about the problem - going "this is a problem", "this might be a solution" for each point, while I'm trying to communicate something about the agregate challenge that Wardley Maps do very well, overall picture
+* weirdness - "isn't steel, laser systems, Plasma Physics, etc much more evolved?" - it is, but this is specific for this application, neutron resistant etc (as covered below). A weakness of pairing down on "unique to IFE" as each of those has a link to much more evolved points (perhaps more specifically a weakness of these maps? )
 * The goal of both major Fusion research projects is "will the fuel ignite?"
 * * Not a question asked of any other power project
 * Simplified
 * Wardley Maps for the uninitiated
+* * resturant as an example, perhaps - BK, genesis in someone's kitchen, a single resturant as custom built, a chain as a product. The burger itself evolves faster - for a custom built it's product, for product it's a commodity
+* * Maybe just link to somewhere else? Just state "R&D to the first point it delivers value", a couple of examples there
+* * "Value chain" this relationship with that - laser hitting targets, laser goes through walls, optics sit in wall, targets injected
 * "Visibility" in this context
 * * what people will think of when they think of plasma physics, broadly
 * Why I'm being so uncharitable
