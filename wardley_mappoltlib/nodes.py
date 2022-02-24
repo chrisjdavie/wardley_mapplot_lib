@@ -41,9 +41,9 @@ class Node:
     code: str
     title: str
     type: str
-    dependencies: List[str]
     visibility: float
     evolution: float
+    dependencies: List[str] = field(default_factory=list)
     subcat: Optional[str] = None
     optional: bool = False
     arrows: List[Arrow] = field(default_factory=list)

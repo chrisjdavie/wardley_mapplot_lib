@@ -1,13 +1,11 @@
 * for simplified, complex
-* * remove Fusion power plant node
 * * reorder, (heat exchanger linking to Structure/Breeder Blanket)
+* * * Pellet storage is the next
+* put in plasma physics, complex
+* simplified, struct, a little evolution
+* Link power grid to driver, complex
 * Very simplified - fusion power plant, turbine, power grid
 * regulation (links to Pellet Storage, Production, Ti Market, Ti Production and Radioactive waste management)
-* update simple
-* * heat exchanger
-* * turbine
-* * power grid
-* simplified; laser links to targets
 # Blog post idea
 * 2 posts - one justification, one "Wardley Maps in scientific research"
 * Problem statement, ish, - A way of having a conversation about the problem - going "this is a problem", "this might be a solution" for each point, while I'm trying to communicate something about the agregate challenge that Wardley Maps do very well, overall picture

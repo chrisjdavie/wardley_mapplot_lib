@@ -2,13 +2,33 @@
     "title": "Simplified Inertial Fusion Research",
     "nodes": [
         {
+            "code": "PowerGrid",
+            "title": "Power Grid",
+            "type": "Node",
+            "dependencies": [
+                "Turbine"
+            ],
+            "visibility": 0.85,
+            "evolution": 3.5
+        },
+        {
+            "code": "Turbine",
+            "title": "Turbine",
+            "type": "Node",
+            "dependencies": [
+                "HeatExc"
+            ],
+            "visibility": 0.9,
+            "evolution": 2.5
+        },
+        {
             "code": "HeatExc",
             "title": "Heat Exchanger,\nTritium Extractor",
             "type": "Node",
             "dependencies": [
-                "NIF"
+                "BB"
             ],
-            "visibility": 0.8,
+            "visibility": 0.95,
             "evolution": 0.3,
             "arrows": [
                 {
@@ -18,104 +38,32 @@
             ]
         },
         {
-            "code": "NIF",
-            "title": "Fusion Power Plant\n(Experimental Facilities)",
+            "code": "BB",
+            "title": "Breeder\nBlanket",
+            "type": "Node",
+            "subcat": "Struct",
+            "dependencies": [
+                "Struct",
+                "Ignition"
+            ],
+            "visibility": 1,
+            "evolution": 0.05
+        },
+        {
+            "code": "Ignition",
+            "title": "Pellet\nIgnition",
+            "subcat": "Targets",
             "type": "Node",
             "dependencies": [
                 "Laser",
-                "Pellets",
-                "PP",
-                "Struct"
-            ],
-            "visibility": 1,
-            "evolution": 0.1,
-            "arrows": [
-                {
-                    "evolution": 0.2,
-                    "type": "driven"
-                }
-            ]
-        },
-        {
-            "code": "Laser",
-            "title": "Laser\nSystem",
-            "subcat": "Laser",
-            "type": "Node",
-            "dependencies": [
-                "Driver",
-                "Optics",
-                "LPI",
+                "Injection",
                 "Pellets"
             ],
-            "visibility": 1.2,
-            "evolution": 0.5,
+            "visibility": 1.05,
+            "evolution": 0.9,
             "arrows": [
                 {
-                    "evolution": 0.7,
-                    "type": "driven"
-                }
-            ]
-        },
-        {
-            "code": "Driver",
-            "title": "Driver",
-            "subcat": "Laser",
-            "type": "Node",
-            "dependencies": [
-                "HR"
-            ],
-            "visibility": 1.5,
-            "evolution": 0.7,
-            "arrows": [
-                {
-                    "evolution": 0.8,
-                    "type": "driven"
-                }
-            ]
-        },
-        {
-            "code": "Optics",
-            "title": "Optics",
-            "subcat": "Laser",
-            "type": "Node",
-            "dependencies": [
-                "HR",
-                "RadWaste"
-            ],
-            "visibility": 1.5,
-            "evolution": 0.2
-        },
-        {
-            "code": "LPI",
-            "title": "Laser-Plasma\nInteractions",
-            "subcat": "Plasma Physics",
-            "type": "Node",
-            "dependencies": [],
-            "visibility": 1.5,
-            "evolution": 1.2,
-            "optional": true,
-            "arrows": [
-                {
-                    "evolution": 1.8,
-                    "type": "driven"
-                }
-            ]
-        },
-        {
-            "code": "PP",
-            "title": "IFE Plasma\nPhysics",
-            "type": "Node",
-            "subcat": "Plasma Physics",
-            "dependencies": [
-                "LPI",
-                "Pellets"
-            ],
-            "visibility": 1.2,
-            "evolution": 1.1,
-            "optional": true,
-            "arrows": [
-                {
-                    "evolution": 1.7,
+                    "evolution": 1.1,
                     "type": "driven"
                 }
             ]
@@ -126,12 +74,10 @@
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
-                "Injection",
-                "PelPro",
-                "Storage"
+                "PelPro"
             ],
-            "visibility": 1.8,
-            "evolution": 0.4,
+            "visibility": 1.25,
+            "evolution": 0.5,
             "arrows": [
                 {
                     "evolution": 0.5,
@@ -140,66 +86,53 @@
             ]
         },
         {
+            "code": "PelPro",
+            "title": "Pellet\nproduction",
+            "subcat": "Targets",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 1.5,
+            "evolution": 0.05
+        },
+        {
             "code": "Injection",
             "title": "Pellet\ninjection",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
-                "ConSys"
+                "FW"
             ],
-            "visibility": 2.1,
+            "visibility": 1.3,
             "evolution": 0.05
         },
         {
-            "code": "Storage",
-            "title": "Pellet\nStorage",
-            "subcat": "Targets",
-            "type": "Node",
-            "dependencies": [],
-            "visibility": 2.1,
-            "evolution": 0.6
-        },
-        {
-            "code": "PelPro",
-            "title": "Pellet\nproduction",
-            "subcat": "Targets",
+            "code": "Laser",
+            "title": "Laser\nSystem",
+            "subcat": "Laser",
             "type": "Node",
             "dependencies": [
-                "TiMk"
+                "Lenses"
             ],
-            "visibility": 2.4,
-            "evolution": 0.05
+            "visibility": 1.1,
+            "evolution": 0.5,
+            "arrows": [
+                {
+                    "evolution": 0.7,
+                    "type": "driven"
+                }
+            ]
         },
         {
-            "code": "TiMk",
-            "title": "Tritium\nMarket",
-            "subcat": "Targets",
+            "code": "Lenses",
+            "title": "Lenses",
+            "subcat": "Laser",
             "type": "Node",
             "dependencies": [
-                "TiPd"
+                "FW",
+                "HR"
             ],
-            "visibility": 2.6,
-            "evolution": 0.5
-        },
-        {
-            "code": "TiPd",
-            "title": "Tritium\nProduction",
-            "subcat": "Targets",
-            "type": "Node",
-            "dependencies": [
-                "Lithium"
-            ],
-            "visibility": 2.8,
-            "evolution": 1.5
-        },
-        {
-            "code": "Lithium",
-            "title": "Lithium\nmarket",
-            "subcat": "Targets",
-            "type": "Node",
-            "dependencies": [],
-            "visibility": 3.0,
-            "evolution": 3.2
+            "visibility": 1.15,
+            "evolution": 0.2
         },
         {
             "code": "Struct",
@@ -207,29 +140,19 @@
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [
-                "Pellets",
-                "RadWaste"
+                "FW",
+                "Steel"
             ],
-            "visibility": 2.8,
+            "visibility": 1.2,
             "evolution": 0.1
         },
         {
-            "code": "RadWaste",
-            "title": "Radioactive waste\nmanagement",
-            "subcat": "Struct",
+            "code": "Steel",
+            "title": "Steel",
             "type": "Node",
-            "dependencies": [],
-            "visibility": 3.0,
-            "evolution": 1.3
-        },
-        {
-            "code": "HR",
-            "title": "Heat\nRegulation",
             "subcat": "Struct",
-            "type": "Node",
-            "dependencies": [],
-            "visibility": 3.4,
-            "evolution": 0.2
+            "visibility": 1.4,
+            "evolution": 0.9
         },
         {
             "code": "FW",
@@ -237,11 +160,9 @@
             "type": "Node",
             "subcat": "Struct",
             "dependencies": [
-                "ConSys",
-                "HR",
-                "Optics"
+                "HR"
             ],
-            "visibility": 3.2,
+            "visibility": 1.4,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -251,35 +172,13 @@
             ]
         },
         {
-            "code": "FW",
-            "title": "Breeder\nBlanket",
-            "type": "Node",
+            "code": "HR",
+            "title": "Heat\nRegulation",
             "subcat": "Struct",
-            "dependencies": [
-                "Struct"
-            ],
-            "visibility": 3.2,
-            "evolution": 0.05
-        },
-        {
-            "code": "ConSys",
-            "title": "Control\nSystems",
             "type": "Node",
-            "subcat": "Targets",
             "dependencies": [],
-            "visibility": 3.6,
-            "evolution": 0.5
-        },
-        {
-            "code": "Steel",
-            "title": "Steel",
-            "type": "Node",
-            "subcat": "Struct",
-            "dependencies": [
-                "Struct"
-            ],
-            "visibility": 3.2,
-            "evolution": 0.9
+            "visibility": 1.6,
+            "evolution": 0.2
         }
     ]
 }
