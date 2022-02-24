@@ -2,6 +2,22 @@
     "title": "Simplified Inertial Fusion Research",
     "nodes": [
         {
+            "code": "HeatExc",
+            "title": "Heat Exchanger,\nTritium Extractor",
+            "type": "Node",
+            "dependencies": [
+                "NIF"
+            ],
+            "visibility": 0.8,
+            "evolution": 0.3,
+            "arrows": [
+                {
+                    "evolution": 1.0,
+                    "type": "required"
+                }
+            ]
+        },
+        {
             "code": "NIF",
             "title": "Fusion Power Plant\n(Experimental Facilities)",
             "type": "Node",
@@ -49,7 +65,13 @@
                 "HR"
             ],
             "visibility": 1.5,
-            "evolution": 0.7
+            "evolution": 0.7,
+            "arrows": [
+                {
+                    "evolution": 0.8,
+                    "type": "driven"
+                }
+            ]
         },
         {
             "code": "Optics",

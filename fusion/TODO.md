@@ -1,10 +1,7 @@
-* Colored lines
-* Same line colors to simplified
-* * lines
-* * legend
-* heat exchanger
-* * complex stretched
-* * complex clean
+* for simplified, complex
+* * remove Fusion power plant node
+* * reorder, (heat exchanger linking to Structure/Breeder Blanket)
+* Very simplified - fusion power plant, turbine, power grid
 * regulation (links to Pellet Storage, Production, Ti Market, Ti Production and Radioactive waste management)
 * update simple
 * * heat exchanger
@@ -13,11 +10,12 @@
 * simplified; laser links to targets
 # Blog post idea
 * 2 posts - one justification, one "Wardley Maps in scientific research"
+* Problem statement, ish, - A way of having a conversation about the problem - going "this is a problem", "this might be a solution" for each point, while I'm trying to communicate something about the agregate challenge that Wardley Maps do very well, overall picture
+* start out super simplified, very simplified plot
 * * this entire thing is imaginary ("envisaged"), but mostly not my imagination
 * explain how I'm butchering the maps
 * * emphasising the "unique" to fusion, leaving off electrical grid feedback (disservice? feedback loop in the electrical grid is important)
 * * stretching it out, leaving off the rhs (links to above - the novel is the undiscovered)
-* A way of having a conversation about the problem - going "this is a problem", "this might be a solution" for each point, while I'm trying to communicate something about the agregate challenge that Wardley Maps do very well, overall picture
 * weirdness - "isn't steel, laser systems, Plasma Physics, etc much more evolved?" - it is, but this is specific for this application, neutron resistant etc (as covered below). A weakness of pairing down on "unique to IFE" as each of those has a link to much more evolved points (perhaps more specifically a weakness of these maps? )
 * The goal of both major Fusion research projects is "will the fuel ignite?"
 * * Not a question asked of any other power project
@@ -45,6 +43,7 @@
 * NIF is primarily about developing the plasma physics
 * Target design is evolving, but DD vs IDD (many think DD will be the way to go, energy efficiency but laser incident directly on the surface of the target has many different design requirements than IDD. Also, massssssssss production)
 * Tritium market (kinda exists, Defense on govt side has stockpiles, precursor)
+* not talked about the heat exchanger; how hard can it be, dual purpose facility, to extract the heat and the newly minted tritium. How hard can it be?
 # Make code better
 * CLI for this (dicking around with main is not happy)
 * KeyError for missing node dependency is unclear

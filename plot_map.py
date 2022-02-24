@@ -311,6 +311,7 @@ if __name__ == "__main__":
     image_path = data_dir / (data_path.stem+".svg")
 
     lengend_arrows = [
+        InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
         InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
         Line2D([], [], label="Necessary link for reactor",
                color="darkgrey", ls="--"),

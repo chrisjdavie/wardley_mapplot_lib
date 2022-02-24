@@ -2,6 +2,43 @@
     "title": "Simplified Inertial Fusion Research",
     "nodes": [
         {
+            "code": "PowerGrid",
+            "title": "Power Grid",
+            "type": "Node",
+            "dependencies": [
+                "Turbine",
+                "Laser"
+            ],
+            "visibility": 2.4,
+            "evolution": 3.5
+        },
+        {
+            "code": "Turbine",
+            "title": "Turbine",
+            "type": "Node",
+            "dependencies": [
+                "HeatExc"
+            ],
+            "visibility": 2.6,
+            "evolution": 2.5
+        },
+        {
+            "code": "HeatExc",
+            "title": "Heat Exchanger,\nTritium Extractor",
+            "type": "Node",
+            "dependencies": [
+                "NIF"
+            ],
+            "visibility": 2.8,
+            "evolution": 0.3,
+            "arrows": [
+                {
+                    "evolution": 1.0,
+                    "type": "required"
+                }
+            ]
+        },
+        {
             "code": "NIF",
             "title": "Fusion Power Plant \n(Experimental Facilities)",
             "type": "Node",
@@ -11,7 +48,7 @@
                 "PP",
                 "Struct"
             ],
-            "visibility": 1,
+            "visibility": 3,
             "evolution": 0.1,
             "arrows": [
                 {
@@ -32,9 +69,10 @@
             "type": "Node",
             "dependencies": [
                 "Struct",
-                "PP"
+                "PP",
+                "Targets"
             ],
-            "visibility": 2,
+            "visibility": 4,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -54,7 +92,7 @@
             "type": "Node",
             "subcat": "Plasma Physics",
             "dependencies": [],
-            "visibility": 2.2,
+            "visibility": 4.2,
             "evolution": 1.1,
             "optional": true,
             "arrows": [
@@ -72,7 +110,7 @@
             "dependencies": [
                 "PP"
             ],
-            "visibility": 3,
+            "visibility": 5,
             "evolution": 0.2,
             "arrows": [
                 {
@@ -94,7 +132,7 @@
             "dependencies": [
                 "Targets"
             ],
-            "visibility": 4,
+            "visibility": 6,
             "evolution": 0.1,
             "arrows": [
                 {
