@@ -1,9 +1,10 @@
 from copy import copy
 from dataclasses import dataclass
-import json
 from pathlib import Path
 from turtle import fillcolor
 from typing import Dict, List, Tuple
+import json
+import os
 
 from adjustText import adjust_text
 from matplotlib import pyplot as plt
@@ -308,7 +309,8 @@ if __name__ == "__main__":
 
     ax, node_list = draw_wardley_map_from_json(data_path, subcat_marker_map)
 
-    image_path = data_dir / (data_path.stem+".svg")
+    image_dir = Path(os.environ.get("IMAGE_DIR", data_dir))
+    image_path = image_dir / (data_path.stem+".svg")
 
     lengend_arrows = [
         InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
