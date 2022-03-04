@@ -3,12 +3,13 @@
     "nodes": [
         {
             "code": "PowerGrid",
-            "title": "Power Grid",
+            "title": "Power\ngrid",
             "type": "Node",
             "dependencies": [
-                "Turbine"
+                "Turbine",
+                "Laser"
             ],
-            "visibility": 0.85,
+            "visibility": 0.9,
             "evolution": 3.5
         },
         {
@@ -18,40 +19,23 @@
             "dependencies": [
                 "HeatExc"
             ],
-            "visibility": 0.9,
+            "visibility": 0.91,
             "evolution": 2.5
         },
         {
             "code": "HeatExc",
-            "title": "Heat Exchanger,\nTritium Extractor",
+            "title": "Heat exchanger,\ntritium extractor",
             "type": "Node",
             "dependencies": [
                 "BB",
                 "TritMar"
             ],
             "visibility": 0.95,
-            "evolution": 0.3,
-            "arrows": [
-                {
-                    "evolution": 1.0,
-                    "type": "required"
-                }
-            ]
+            "evolution": 0.3
         },
         {
             "code": "TritMar",
-            "title": "Tritium\nMarket",
-            "subcat": "Targets",
-            "type": "Node",
-            "dependencies": [
-                "PelPro"
-            ],
-            "visibility": 1,
-            "evolution": 0.45
-        },
-        {
-            "code": "TritMar",
-            "title": "Tritium\nMarket",
+            "title": "Tritium\nmarket",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
@@ -63,7 +47,7 @@
         },
         {
             "code": "TiPd",
-            "title": "Tritium\nProduction",
+            "title": "Tritium\nproduction",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
@@ -113,6 +97,26 @@
             ]
         },
         {
+            "code": "PP",
+            "title": "Plasma\nPhysics (IFE)",
+            "type": "Node",
+            "subcat": "Plasma Physics",
+            "dependencies": [
+                "Ignition",
+                "Pellets",
+                "Laser"
+            ],
+            "visibility": 1.12,
+            "evolution": 1.1,
+            "optional": true,
+            "arrows": [
+                {
+                    "evolution": 1.7,
+                    "type": "driven"
+                }
+            ]
+        },
+        {
             "code": "Pellets",
             "title": "Pellet\nDesign",
             "subcat": "Targets",
@@ -141,7 +145,7 @@
             "evolution": 0.15,
             "arrows": [
                 {
-                    "evolution": 0.25,
+                    "evolution": 0.22,
                     "type": "driven"
                 }
             ]
@@ -165,7 +169,7 @@
             "dependencies": [
                 "Lenses"
             ],
-            "visibility": 1.08,
+            "visibility": 1.05,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -188,6 +192,14 @@
             "evolution": 0.2
         },
         {
+            "code": "RadWaste",
+            "title": "Radioactive waste\nmanagement",
+            "subcat": "Struct",
+            "type": "Node",
+            "visibility": 1.18,
+            "evolution": 1.3
+        },
+        {
             "code": "Struct",
             "title": "Structure",
             "subcat": "Struct",
@@ -197,23 +209,15 @@
                 "Steel",
                 "RadWaste"
             ],
-            "visibility": 1.3,
+            "visibility": 1.25,
             "evolution": 0.1
-        },
-        {
-            "code": "RadWaste",
-            "title": "Radioactive waste\nmanagement",
-            "subcat": "Struct",
-            "type": "Node",
-            "visibility": 1.18,
-            "evolution": 1.3
         },
         {
             "code": "Steel",
             "title": "Steel",
             "type": "Node",
             "subcat": "Struct",
-            "visibility": 1.4,
+            "visibility": 1.3,
             "evolution": 0.9
         },
         {
@@ -224,7 +228,7 @@
             "dependencies": [
                 "HR"
             ],
-            "visibility": 1.4,
+            "visibility": 1.3,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -239,7 +243,7 @@
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [],
-            "visibility": 1.6,
+            "visibility": 1.35,
             "evolution": 0.2
         }
     ]

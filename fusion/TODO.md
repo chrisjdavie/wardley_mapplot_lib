@@ -1,7 +1,7 @@
 * for simplified, complex
 * * reorder, (heat exchanger linking to Structure/Breeder Blanket)
-* * * Pellet storage is the next
-* put in plasma physics, complex
+* consistent capitalisation, simplified, complex
+* complex, remove blue arrow
 * simplified, struct, a little evolution
 * Link power grid to driver, complex
 * Very simplified - fusion power plant, turbine, power grid
@@ -9,6 +9,13 @@
 # Blog post idea
 * 2 posts - one justification, one "Wardley Maps in scientific research"
 * Problem statement, ish, - A way of having a conversation about the problem - going "this is a problem", "this might be a solution" for each point, while I'm trying to communicate something about the agregate challenge that Wardley Maps do very well, overall picture
+* Wardley maps doesn't, in this form, distinguish between scale of difficulties of evolving nodes
+* * Tritium Market - established markets for selling radioactive materials, if Ti can be produced, replicating the patterns may (MAY) not be too hard?
+* * 10/s vs 2/day, for days
+* * * Lasers doing this
+* * * Injection - middle of sphere, hitting tiny pellet each time perfectly
+* * * Structure - fully evcuating a sphere of X m**3 10Hz
+* * Could be represented by further expanding nodes (but more and more sci-fi like)
 * start out super simplified, very simplified plot
 * * this entire thing is imaginary ("envisaged"), but mostly not my imagination
 * explain how I'm butchering the maps
