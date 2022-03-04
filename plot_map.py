@@ -309,7 +309,7 @@ if __name__ == "__main__":
 
     ax, node_list = draw_wardley_map_from_json(data_path, subcat_marker_map)
 
-    image_dir = Path(os.environ.get("IMAGE_DIR", data_dir))
+    image_dir = data_dir
     image_path = image_dir / (data_path.stem+".svg")
 
     lengend_arrows = [
@@ -332,3 +332,7 @@ if __name__ == "__main__":
     )
 
     plt.savefig(image_path)
+    if image_dir := os.environ.get("IMAGE_DIR"):
+        print("foo")
+        image_path = Path(image_dir) / (data_path.stem+".svg")
+        plt.savefig(image_path)
