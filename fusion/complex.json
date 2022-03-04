@@ -62,12 +62,12 @@
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [],
-            "visibility": 1.15,
+            "visibility": 1.1,
             "evolution": 3.2
         },
         {
             "code": "BB",
-            "title": "Breeder\nBlanket",
+            "title": "Breeder\nblanket",
             "type": "Node",
             "subcat": "Struct",
             "dependencies": [
@@ -79,7 +79,7 @@
         },
         {
             "code": "Ignition",
-            "title": "Pellet\nIgnition",
+            "title": "Pellet\nignition",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
@@ -98,7 +98,7 @@
         },
         {
             "code": "PP",
-            "title": "Plasma\nPhysics (IFE)",
+            "title": "Plasma\nphysics (IFE)",
             "type": "Node",
             "subcat": "Plasma Physics",
             "dependencies": [
@@ -106,7 +106,7 @@
                 "Pellets",
                 "Laser"
             ],
-            "visibility": 1.12,
+            "visibility": 1.08,
             "evolution": 1.1,
             "optional": true,
             "arrows": [
@@ -118,13 +118,13 @@
         },
         {
             "code": "Pellets",
-            "title": "Pellet\nDesign",
+            "title": "Pellet\ndesign",
             "subcat": "Targets",
             "type": "Node",
             "dependencies": [
                 "PelPro"
             ],
-            "visibility": 1.2,
+            "visibility": 1.15,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -138,7 +138,7 @@
             "title": "Pellet\nproduction",
             "subcat": "Targets",
             "type": "Node",
-            "dependencies":[
+            "dependencies": [
                 "Injection"
             ],
             "visibility": 1.05,
@@ -158,12 +158,12 @@
             "dependencies": [
                 "FW"
             ],
-            "visibility": 1.2,
+            "visibility": 1.15,
             "evolution": 0.03
         },
         {
             "code": "Laser",
-            "title": "Laser\nSystem",
+            "title": "Laser\nsystem",
             "subcat": "Laser",
             "type": "Node",
             "dependencies": [
@@ -188,7 +188,7 @@
                 "HR",
                 "RadWaste"
             ],
-            "visibility": 1.15,
+            "visibility": 1.1,
             "evolution": 0.2
         },
         {
@@ -196,7 +196,7 @@
             "title": "Radioactive waste\nmanagement",
             "subcat": "Struct",
             "type": "Node",
-            "visibility": 1.18,
+            "visibility": 1.13,
             "evolution": 1.3
         },
         {
@@ -209,7 +209,7 @@
                 "Steel",
                 "RadWaste"
             ],
-            "visibility": 1.25,
+            "visibility": 1.2,
             "evolution": 0.1
         },
         {
@@ -217,18 +217,18 @@
             "title": "Steel",
             "type": "Node",
             "subcat": "Struct",
-            "visibility": 1.3,
+            "visibility": 1.25,
             "evolution": 0.9
         },
         {
             "code": "FW",
-            "title": "First\nWall",
+            "title": "First\nwall",
             "type": "Node",
             "subcat": "Struct",
             "dependencies": [
                 "HR"
             ],
-            "visibility": 1.3,
+            "visibility": 1.25,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -239,11 +239,11 @@
         },
         {
             "code": "HR",
-            "title": "Heat\nRegulation",
+            "title": "Heat\nregulation",
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [],
-            "visibility": 1.35,
+            "visibility": 1.26,
             "evolution": 0.2
         }
     ]

@@ -1,6 +1,6 @@
 * for simplified, complex
 * * reorder, (heat exchanger linking to Structure/Breeder Blanket)
-* consistent capitalisation, simplified, complex
+* consistent capitalisation, simplified
 * complex, remove blue arrow
 * simplified, struct, a little evolution
 * Link power grid to driver, complex
