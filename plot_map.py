@@ -1,8 +1,9 @@
 from copy import copy
 from dataclasses import dataclass
+from email.generator import Generator
 from pathlib import Path
 from turtle import fillcolor
-from typing import Dict, List, Tuple
+from typing import Dict, List, Set, Tuple
 import json
 import os
 
@@ -14,7 +15,7 @@ import numpy as np
 from scipy import interpolate
 
 from wardley_mappoltlib.nodes import \
-    Arrow, Node, build_node_list, graph_from_node_list
+    Arrow, Node, NodeDataType, NodeGraph
 
 
 VISIBILITY_BOOST = 0.05
@@ -75,18 +76,18 @@ def setup_plot(ax):
     ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
 
 
-def plot_annotate_nodes(node_list: List[Node], ax, subcat_marker_map: Dict[str, str]):
+def plot_annotate_nodes(node_graph: NodeGraph, ax, subcat_marker_map: Dict[str, str]):
     # Sort out axis points
 
-    remaining: List[Node] = copy(node_list)
+    remaining: NodeGraph = copy(node_graph)
 
     for subcat, marker_style in subcat_marker_map.items():
 
-        xx_subcat: List[Node] = [
-            node.evolution for node in node_list if node.subcat == subcat]
-        yy_subcat: List[Node] = [
-            node.visibility_rescaled for node in node_list if node.subcat == subcat]
-        for node in node_list:
+        xx_subcat: list[float] = [
+            node.evolution for node in node_graph if node.subcat == subcat]
+        yy_subcat: list[float] = [
+            node.visibility for node in node_graph if node.subcat == subcat]
+        for node in node_graph:
             if node.subcat == subcat:
                 remaining.remove(node)
 
@@ -97,8 +98,8 @@ def plot_annotate_nodes(node_list: List[Node], ax, subcat_marker_map: Dict[str, 
             s=100
         )
 
-    xx_remain: List[Node] = [node.evolution for node in remaining]
-    yy_remain: List[Node] = [node.visibility_rescaled for node in remaining]
+    xx_remain: list[float] = [node.evolution for node in remaining]
+    yy_remain: list[float] = [node.visibility for node in remaining]
     print(xx_remain)
     plt.scatter(
         xx_remain,
@@ -107,10 +108,13 @@ def plot_annotate_nodes(node_list: List[Node], ax, subcat_marker_map: Dict[str, 
         edgecolors="black",
         s=100
     )
+    a: int
+    b: int
+    c: int
 
-    xx = [node.evolution for node in node_list]
-    yy = [node.visibility_rescaled for node in node_list]
-    text = [node.title for node in node_list]
+    xx: list[float] = [node.evolution for node in node_graph]
+    yy: list[float] = [node.visibility for node in node_graph]
+    text = [node.title for node in node_graph]
     annotations = []
 
     for x_i, y_i, t_i in zip(xx, yy, text):
@@ -166,29 +170,27 @@ class HandlerWplArrow(HandlerNpoints):
         return [legline, legline]
 
 
-def plot_arrow(node_list: List[Node], ax):
+def plot_arrow(node_graph: NodeGraph, ax) -> List[Arrow]:
 
-    for node in node_list:
-        if node.arrows:
-            for arrow_data in node.arrows:
-                line = InertiaArrow.from_arrow(
-                    arrow_data, node.visibility_rescaled)
-
-                ax.add_line(line)
+    for node in node_graph:
+        for an_arrow in node.arrows:
+            line = InertiaArrow.from_arrow(
+                an_arrow, node.visibility)
+            ax.add_line(line)
 
 
-def build_connecting_lines(node_list: List[Node]
+def build_connecting_lines(node_graph: NodeGraph
                            ) -> Tuple[List[Tuple[float]], List[Tuple[float]], List[bool]]:
     xxx_dep = [
         (node.evolution, child.evolution)
-        for node in node_list for child in node.children
+        for node in node_graph for child in node.children
     ]
     yyy_dep = [
-        (node.visibility_rescaled, child.visibility_rescaled)
-        for node in node_list for child in node.children
+        (node.visibility, child.visibility)
+        for node in node_graph for child in node.children
     ]
     optional = [
-        (node.optional or child.optional) for node in node_list for child in node.children
+        (node.optional or child.optional) for node in node_graph for child in node.children
     ]
     return xxx_dep, yyy_dep, optional
 
@@ -237,11 +239,34 @@ def move_annotations_away(
     )
 
 
+def build_rescale_node_graph(graph_data: list[NodeDataType]) -> NodeGraph:
+    """
+    Rescale visibility
+    """
+    node_graph = NodeGraph.from_node_data(graph_data)
+
+    if len(node_graph) == 1:
+        node_graph[0].visibility = node_graph[0].visibility
+        return node_graph
+
+    vis_min = min([n.visibility for n in node_graph])
+    vis_max = max([n.visibility for n in node_graph])
+    scale_factor = vis_max - vis_min
+    for node in node_graph:
+        node.visibility = (
+            scale_factor - (node.visibility - vis_min))/scale_factor
+
+    # shift visibility
+    for node in node_graph:
+        node.visibility += VISIBILITY_BOOST
+
+    return node_graph
+
+
 def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str]):
     with data_path.open("r") as data_fh:
         data_data = json.load(data_fh)
-    node_list: List[Node] = build_node_list(data_data["nodes"])
-    graph_from_node_list(node_list)
+    node_graph: NodeGraph = build_rescale_node_graph(data_data["nodes"])
 
     fig = plt.figure(figsize=[12.8, 9.6])
     ax = fig.add_subplot()
@@ -249,22 +274,19 @@ def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str
     setup_plot(ax)
 
     plt.title(data_data["title"], weight="bold", fontsize=14)
-    # shift visibility
-    for node in node_list:
-        node.visibility_rescaled += VISIBILITY_BOOST
-    annotations = plot_annotate_nodes(node_list, ax, subcat_marker_map)
-    plot_arrow(node_list, ax)
-    xxx_dep, yyy_dep, optional = build_connecting_lines(node_list)
+
+    annotations = plot_annotate_nodes(node_graph, ax, subcat_marker_map)
+    plot_arrow(node_graph, ax)
+    xxx_dep, yyy_dep, optional = build_connecting_lines(node_graph)
     plot_connecting_lines(xxx_dep, yyy_dep, optional)
     # move_annotations_away(xxx_dep, yyy_dep, annotations)
-    return ax, node_list
+    return ax, node_graph
 
 
 def draw_data_from_json(data_path: Path):
     with data_path.open("r") as data_fh:
         data_data = json.load(data_fh)
-    node_list: List[Node] = build_node_list(data_data["nodes"])
-    graph_from_node_list(node_list)
+    node_graph: NodeGraph = NodeGraph.from_node_data(data_data["nodes"])
 
     fig = plt.figure(figsize=[12.8, 9.6])
     ax = fig.add_subplot()
@@ -281,11 +303,8 @@ def draw_data_from_json(data_path: Path):
     ax.spines["left"].set_visible(False)
     # setup_plot(ax)
     plt.title(data_data["title"], weight="bold", fontsize=14)
-    # shift visibility
-    for node in node_list:
-        node.visibility_rescaled += VISIBILITY_BOOST
-    annotations = plot_annotate_nodes(node_list, ax)
-    xxx_dep, yyy_dep, _ = build_connecting_lines(node_list)
+    annotations = plot_annotate_nodes(node_graph, ax)
+    xxx_dep, yyy_dep, _ = build_connecting_lines(node_graph)
     plot_connecting_lines(xxx_dep, yyy_dep)
     move_annotations_away(xxx_dep, yyy_dep, annotations)
 
@@ -307,14 +326,17 @@ if __name__ == "__main__":
         "Plasma Physics": {"marker": "s", "c": "C5"}
     }
 
-    ax, node_list = draw_wardley_map_from_json(data_path, subcat_marker_map)
+    ax, node_graph = draw_wardley_map_from_json(data_path, subcat_marker_map)
 
     image_dir = data_dir
     image_path = image_dir / (data_path.stem+".svg")
 
+    arrow_types = set(
+        arrow.type for node in node_graph for arrow in node.arrows)
+
     lengend_arrows = [
-        InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),
-        InertiaArrow.from_arrow(Arrow(0, 0, "driven"), 0),
+        *[InertiaArrow.from_arrow(Arrow(0, 0, arr_type), 0)
+          for arr_type in arrow_types],
         Line2D([], [], label="Necessary link for reactor",
                color="darkgrey", ls="--"),
         Line2D([], [], label="Less necessary link", color="lightgrey", ls="-.")

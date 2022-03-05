@@ -12,7 +12,7 @@ from typing import Dict, List, Optional, Union
 ArrowDataType = Dict[str, float]
 
 
-@dataclass
+@dataclass(frozen=True)
 class Arrow:
     """
     An arrow pointing away from a Node in a Wardley Map
@@ -48,8 +48,6 @@ class Node:
     optional: bool = False
     arrows: List[Arrow] = field(default_factory=list)
 
-    visibility_rescaled: float = -1.0
-
     # these are things for exploring the tree
     children: List[Node] = field(default_factory=list)
 
@@ -69,31 +67,27 @@ class Node:
         return cls(**_data_to_modify, arrows=arrows)
 
 
-def build_node_list(graph_data: List[NodeDataType]) -> List[Node]:
-    """
-    builds a node list from a graph_data dictionary
-    """
-    node_list = [Node.from_dict(gd) for gd in graph_data]
-    if len(node_list) == 1:
-        node_list[0].visibility_rescaled = node_list[0].visibility
-        return node_list
+class NodeGraph(list[Node]):
 
-    vis_min = min([n.visibility for n in node_list])
-    vis_max = max([n.visibility for n in node_list])
-    scale_factor = vis_max - vis_min
-    for node in node_list:
-        node.visibility_rescaled = (
-            scale_factor - (node.visibility - vis_min))/scale_factor
-    return node_list
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self._rescale()
+        self._build_graph()
 
+    @classmethod
+    def from_node_data(cls, graph_data: List[NodeDataType]) -> NodeGraph:
+        """
+        builds a node list from a graph_data dictionary
+        """
+        return cls(Node.from_dict(gd) for gd in graph_data)
 
-def graph_from_node_list(all_nodes: List[Node]) -> None:
-    """
-    Updates the Nodes to have neighbours and children
-    """
-    code_node_map: Dict[str, Node] = {n.code: n for n in all_nodes}
+    def _build_graph(self) -> None:
+        """
+        Updates the Nodes to have neighbours and children
+        """
+        code_node_map: Dict[str, Node] = {n.code: n for n in self}
 
-    for a_node in all_nodes:
-        for child_code in a_node.dependencies:
-            child_node: Node = code_node_map[child_code]
-            a_node.children.append(child_node)
+        for a_node in self:
+            for child_code in a_node.dependencies:
+                child_node: Node = code_node_map[child_code]
+                a_node.children.append(child_node)
