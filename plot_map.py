@@ -297,7 +297,7 @@ def draw_data_from_json(data_path: Path):
 if __name__ == "__main__":
 
     data_dir = Path("fusion")
-    data_path = data_dir / "complex.json"
+    data_path = data_dir / "simplified.json"
     # draw_data_from_json(data_path)
     subcat_marker_map: Dict[str, str] = {
         # , "edgecolors": "firebrick"},
@@ -311,6 +311,8 @@ if __name__ == "__main__":
 
     image_dir = data_dir
     image_path = image_dir / (data_path.stem+".svg")
+    print(image_path)
+    print(data_path)
 
     lengend_arrows = [
         InertiaArrow.from_arrow(Arrow(0, 0, "required"), 0),

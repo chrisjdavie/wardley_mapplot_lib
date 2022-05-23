@@ -1,9 +1,3 @@
-* for simplified, complex
-* * reorder, (heat exchanger linking to Structure/Breeder Blanket)
-* consistent capitalisation, simplified
-* complex, remove blue arrow
-* simplified, struct, a little evolution
-* Link power grid to driver, complex
 * Very simplified - fusion power plant, turbine, power grid
 * regulation (links to Pellet Storage, Production, Ti Market, Ti Production and Radioactive waste management)
 # Blog post idea
