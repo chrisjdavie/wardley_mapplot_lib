@@ -1,5 +1,15 @@
+<<<<<<< HEAD
+=======
+* for simplified
+* * reorder, (heat exchanger linking to Structure/Breeder Blanket)
+* consistent capitalisation, simplified
+* simplified, struct, a little evolution
+>>>>>>> d21a01a733ccce79fc28cd6be794ce769f708db6
 * Very simplified - fusion power plant, turbine, power grid
 * regulation (links to Pellet Storage, Production, Ti Market, Ti Production and Radioactive waste management)
+* Make "Node Graph" object, functions to add 
+* * 2 bottom of nodes.py
+* * `for node in node_list if node.subcat == subcat`?
 # Blog post idea
 * 2 posts - one justification, one "Wardley Maps in scientific research"
 * Problem statement, ish, - A way of having a conversation about the problem - going "this is a problem", "this might be a solution" for each point, while I'm trying to communicate something about the agregate challenge that Wardley Maps do very well, overall picture
