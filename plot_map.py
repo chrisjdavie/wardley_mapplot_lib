@@ -330,7 +330,6 @@ if __name__ == "__main__":
 
     image_dir = data_dir
     image_path = image_dir / (data_path.stem+".svg")
-    print(image_path)
     print(data_path)
 
     arrow_types = set(
@@ -355,8 +354,10 @@ if __name__ == "__main__":
         prop={"size": 12}
     )
 
+    print(image_path)
     plt.savefig(image_path)
     if image_dir := os.environ.get("IMAGE_DIR"):
-        print("foo")
         image_path = Path(image_dir) / (data_path.stem+".svg")
+
+        print(image_path)
         plt.savefig(image_path)

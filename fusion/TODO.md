@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-=======
-* for simplified
-* * reorder, (heat exchanger linking to Structure/Breeder Blanket)
-* consistent capitalisation, simplified
-* simplified, struct, a little evolution
->>>>>>> d21a01a733ccce79fc28cd6be794ce769f708db6
 * Very simplified - fusion power plant, turbine, power grid
 * regulation (links to Pellet Storage, Production, Ti Market, Ti Production and Radioactive waste management)
 * Make "Node Graph" object, functions to add 
