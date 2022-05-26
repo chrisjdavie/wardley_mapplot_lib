@@ -34,18 +34,23 @@ ARROW_STYLES = {
 }
 
 
-def setup_plot(ax):
+def setup_plot(ax, max_evolution=4):
     """
     Sets up Wardley Maps axis pretty close to Wardley's
 
     Kinda janky and probably not super portable, but works for this use case
     """
     plt.xlabel("Evolution", weight="bold", size=14)
-    plt.xlim([0, 4])
+    plt.xlim([0, max_evolution])
+
+    x_ticks = list(range(max_evolution))
+    x_tick_labels = [
+        "Genesis", "Custom Built", "Product (+ rental)", "Commodity (+ utility)"
+    ][:len(x_ticks)]
+
     plt.xticks(
-        [0, 1, 2, 3],
-        ["Genesis", "Custom Built",
-            "Product (+ rental)", "Commodity (+ utility)"],
+        x_ticks,
+        x_tick_labels,
         size=12
     )
     for tick in ax.get_xmajorticklabels():
@@ -271,7 +276,7 @@ def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str
     fig = plt.figure(figsize=[12.8, 9.6])
     ax = fig.add_subplot()
 
-    setup_plot(ax)
+    setup_plot(ax, 2)
 
     plt.title(data_data["title"], weight="bold", fontsize=14)
 
@@ -316,7 +321,7 @@ def draw_data_from_json(data_path: Path):
 if __name__ == "__main__":
 
     data_dir = Path("fusion")
-    data_path = data_dir / "simplified.json"
+    data_path = data_dir / "complex.json"
     # draw_data_from_json(data_path)
     subcat_marker_map: Dict[str, str] = {
         # , "edgecolors": "firebrick"},

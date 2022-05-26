@@ -27,7 +27,6 @@ class Venv:
     def _setup_venv(cls, c):
         if not os.path.exists(cls._venv_dir):
             c.run(cls._build)
-        c.run("pip install --upgrade pip")
 
         old_hash = ""
         new_hash = c.run("sha512sum requirements.txt").stdout.split(" ")[0]
@@ -39,6 +38,7 @@ class Venv:
         if old_hash != new_hash:
             print("New requriements, upgrading pip")
             with cls._virtualenv(c):
+                c.run("pip install --upgrade pip")
                 c.run("pip install -r requirements.txt", hide=False, echo=True)
             with cls._requirements_sha.open("w") as hash_fh:
                 hash_fh.write(new_hash)

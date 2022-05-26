@@ -169,7 +169,7 @@
             "dependencies": [
                 "Lenses"
             ],
-            "visibility": 1.05,
+            "visibility": 1.06,
             "evolution": 0.5,
             "arrows": [
                 {
