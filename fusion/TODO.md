@@ -1,8 +1,3 @@
-* get titles right - complex, complex streched
-* for simplified
-* * reorder, (heat exchanger linking to Structure/Breeder Blanket)
-* consistent capitalisation, simplified
-* simplified, struct, a little evolution
 * Very simplified - fusion power plant, turbine, power grid
 * regulation (links to Pellet Storage, Production, Ti Market, Ti Production and Radioactive waste management)
 * Make "Node Graph" object, functions to add 
