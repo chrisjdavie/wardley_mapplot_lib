@@ -358,3 +358,5 @@ if __name__ == "__main__":
         print("foo")
         image_path = Path(image_dir) / (data_path.stem+".svg")
         plt.savefig(image_path)
+
+    plt.show()

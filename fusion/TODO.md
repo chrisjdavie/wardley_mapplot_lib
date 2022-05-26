@@ -1,3 +1,4 @@
+* get titles right - complex, complex streched
 * for simplified
 * * reorder, (heat exchanger linking to Structure/Breeder Blanket)
 * consistent capitalisation, simplified
