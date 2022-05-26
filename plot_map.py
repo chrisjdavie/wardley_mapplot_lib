@@ -361,3 +361,5 @@ if __name__ == "__main__":
 
         print(image_path)
         plt.savefig(image_path)
+
+    plt.show()
