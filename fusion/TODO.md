@@ -1,5 +1,5 @@
+* Even out spread of simplified
 * Very simplified - fusion power plant, turbine, power grid
-* regulation (links to Pellet Storage, Production, Ti Market, Ti Production and Radioactive waste management)
 * Make "Node Graph" object, functions to add 
 * * 2 bottom of nodes.py
 * * `for node in node_list if node.subcat == subcat`?

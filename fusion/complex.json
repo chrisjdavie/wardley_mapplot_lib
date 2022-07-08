@@ -185,7 +185,7 @@
             "type": "Node",
             "dependencies": [
                 "FW",
-                "HR",
+                "HM",
                 "RadWaste"
             ],
             "visibility": 1.1,
@@ -226,7 +226,7 @@
             "type": "Node",
             "subcat": "Struct",
             "dependencies": [
-                "HR"
+                "HM"
             ],
             "visibility": 1.25,
             "evolution": 0.5,
@@ -238,13 +238,26 @@
             ]
         },
         {
-            "code": "HR",
-            "title": "Heat\nregulation",
+            "code": "HM",
+            "title": "Heat\nmanagement",
             "subcat": "Struct",
             "type": "Node",
             "dependencies": [],
             "visibility": 1.26,
             "evolution": 0.2
+        },
+        {
+            "code": "Reg",
+            "title": "Regulation",
+            "type": "Node",
+            "dependencies": [
+                "TiPd",
+                "TritMar",
+                "PelPro",
+                "RadWaste"
+            ],
+            "visibility": 1.21,
+            "evolution": 0.8
         }
     ]
 }

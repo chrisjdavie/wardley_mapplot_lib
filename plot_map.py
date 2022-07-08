@@ -276,7 +276,7 @@ def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str
     fig = plt.figure(figsize=[12.8, 9.6])
     ax = fig.add_subplot()
 
-    setup_plot(ax, 2)
+    setup_plot(ax)  # , 2)
 
     plt.title(data_data["title"], weight="bold", fontsize=14)
 
