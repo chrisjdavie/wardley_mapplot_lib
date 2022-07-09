@@ -321,7 +321,7 @@ def draw_data_from_json(data_path: Path):
 if __name__ == "__main__":
 
     data_dir = Path("fusion")
-    data_path = data_dir / "simplified.json"
+    data_path = data_dir / "very-simplified.json"
     # draw_data_from_json(data_path)
     subcat_marker_map: Dict[str, str] = {
         # , "edgecolors": "firebrick"},
@@ -343,12 +343,12 @@ if __name__ == "__main__":
     lengend_arrows = [
         *[InertiaArrow.from_arrow(Arrow(0, 0, arr_type), 0)
           for arr_type in arrow_types],
-        Line2D([], [], label="Necessary link for reactor",
-               color="darkgrey", ls="--"),
-        Line2D([], [], label="Less necessary link", color="lightgrey", ls="-.")
-    ] + [
-        Line2D([], [], label=subcat, **marker_style, ls="")
-        for subcat, marker_style in subcat_marker_map.items()
+        #     Line2D([], [], label="Necessary link for reactor",
+        #            color="darkgrey", ls="--"),
+        #     Line2D([], [], label="Less necessary link", color="lightgrey", ls="-.")
+        # ] + [
+        #     Line2D([], [], label=subcat, **marker_style, ls="")
+        #     for subcat, marker_style in subcat_marker_map.items()
     ]
 
     ax.legend(

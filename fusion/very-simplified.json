@@ -1,0 +1,56 @@
+{
+    "title": "Inertial Fusion Research, simplified",
+    "nodes": [
+        {
+            "code": "PowerGrid",
+            "title": "Power Grid",
+            "type": "Node",
+            "dependencies": [
+                "Fusion",
+                "Solar",
+                "Nuclear",
+                "Gas"
+            ],
+            "visibility": 1,
+            "evolution": 3.5
+        },
+        {
+            "code": "Fusion",
+            "title": "Fusion",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2,
+            "evolution": 0.6,
+            "arrows": [
+                {
+                    "evolution": 1.5,
+                    "type": "driven"
+                }
+            ]
+        },
+        {
+            "code": "Solar",
+            "title": "Solar",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 2.5,
+            "evolution": 3.1
+        },
+        {
+            "code": "Nuclear",
+            "title": "Nuclear",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 3,
+            "evolution": 1.8
+        },
+        {
+            "code": "Gas",
+            "title": "Gas",
+            "type": "Node",
+            "dependencies": [],
+            "visibility": 3.5,
+            "evolution": 2.7
+        }
+    ]
+}
