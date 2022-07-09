@@ -9,7 +9,7 @@
                 "Turbine",
                 "Laser"
             ],
-            "visibility": 2.6,
+            "visibility": 2.8,
             "evolution": 3.5
         },
         {
@@ -19,7 +19,7 @@
             "dependencies": [
                 "HeatExc"
             ],
-            "visibility": 2.8,
+            "visibility": 2.9,
             "evolution": 2.5
         },
         {
@@ -46,7 +46,7 @@
             "dependencies": [
                 "Targets"
             ],
-            "visibility": 4,
+            "visibility": 3.5,
             "evolution": 0.1,
             "arrows": [
                 {
@@ -70,7 +70,7 @@
                 "PP",
                 "Targets"
             ],
-            "visibility": 5,
+            "visibility": 4,
             "evolution": 0.5,
             "arrows": [
                 {
@@ -90,7 +90,7 @@
             "type": "Node",
             "subcat": "Plasma Physics",
             "dependencies": [],
-            "visibility": 5.2,
+            "visibility": 4.2,
             "evolution": 1.1,
             "optional": true,
             "arrows": [
@@ -108,7 +108,7 @@
             "dependencies": [
                 "PP"
             ],
-            "visibility": 5.5,
+            "visibility": 4.5,
             "evolution": 0.2,
             "arrows": [
                 {

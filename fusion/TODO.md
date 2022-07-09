@@ -1,4 +1,3 @@
-* Even out spread of simplified
 * Very simplified - fusion power plant, turbine, power grid
 * Make "Node Graph" object, functions to add 
 * * 2 bottom of nodes.py
