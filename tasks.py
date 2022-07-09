@@ -1,5 +1,4 @@
 from contextlib import contextmanager
-import os
 from pathlib import Path
 
 from invoke import task
@@ -10,9 +9,9 @@ PYTHON_VERSION = "python3.10"
 class Venv:
     """Misc. commands for handling virtual envs"""
 
-    _cur_dir = os.path.dirname(os.path.abspath(__file__))
-    _venv_dir = os.path.join(_cur_dir, ".venv")
-    _activate_path = os.path.join(_venv_dir, "bin", "activate")
+    _cur_dir = Path(__file__).parent
+    _venv_dir = _cur_dir / ".venv"
+    _activate_path = _venv_dir / "bin" / "activate"
     _activate = ". {}".format(_activate_path)
     _build = f"{PYTHON_VERSION} -m venv {_venv_dir}"
     _requirements_sha = Path(_cur_dir) / "requirements_sha.txt"
@@ -25,7 +24,7 @@ class Venv:
 
     @classmethod
     def _setup_venv(cls, c):
-        if not os.path.exists(cls._venv_dir):
+        if not cls._venv_dir.exists():
             c.run(cls._build)
 
         old_hash = ""
