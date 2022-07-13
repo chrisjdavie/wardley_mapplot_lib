@@ -1,4 +1,5 @@
 from copy import copy
+from curses.textpad import rectangle
 from dataclasses import dataclass
 from email.generator import Generator
 from pathlib import Path
@@ -6,11 +7,13 @@ from turtle import fillcolor
 from typing import Dict, List, Set, Tuple
 import json
 import os
+import math
 
 from adjustText import adjust_text
 from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.legend_handler import HandlerNpoints
+from matplotlib import patches
 import numpy as np
 from scipy import interpolate
 
@@ -19,6 +22,7 @@ from wardley_mappoltlib.nodes import \
 
 
 VISIBILITY_BOOST = 0.05
+MARKER_SIZE = 100
 
 
 @dataclass
@@ -100,7 +104,7 @@ def plot_annotate_nodes(node_graph: NodeGraph, ax, subcat_marker_map: Dict[str, 
             xx_subcat,
             yy_subcat,
             **marker_style,
-            s=100
+            s=MARKER_SIZE
         )
 
     xx_remain: list[float] = [node.evolution for node in remaining]
@@ -111,7 +115,7 @@ def plot_annotate_nodes(node_graph: NodeGraph, ax, subcat_marker_map: Dict[str, 
         yy_remain,
         c="white",
         edgecolors="black",
-        s=100
+        s=MARKER_SIZE
     )
     a: int
     b: int
@@ -268,6 +272,37 @@ def build_rescale_node_graph(graph_data: list[NodeDataType]) -> NodeGraph:
     return node_graph
 
 
+def plot_weird_rectangles(fig, ax, data_data: dict, node_graph: NodeGraph):
+
+    targets = data_data["weird-rectangles"]["power"]
+    target_nodes = [node for node in node_graph if node.code in targets]
+
+    min_ev = min(node.evolution for node in target_nodes)
+    max_ev = max(node.evolution for node in target_nodes)
+    # won't work if the nodes have different visibilities
+    vis = min(node.visibility for node in target_nodes)
+    # this is the definition of points in mpl, I can use x & y lims
+    # data values to convert this to data points and then draw the rectangle
+    # as I like
+    # look up how those rectangles look when wardley draws them
+    # https://stackoverflow.com/questions/14827650/pyplot-scatter-plot-marker-size/47403507#47403507
+    print(min_ev, max_ev, vis)
+    win_ext = ax.get_window_extent()
+    print(dir(ax.yaxis))
+    y_0, y_1 = ax.get_ylim()
+    print(win_ext.height, win_ext.ymin, win_ext.ymax)
+    data_height = (y_1 - y_0) * math.sqrt(MARKER_SIZE)/(win_ext.height)
+    data_height_shift = data_height
+
+    x_0, x_1 = ax.get_xlim()
+    data_width = (x_1 - x_0) * math.sqrt(MARKER_SIZE)/(win_ext.width)
+    data_width_shift = data_width
+    rect = patches.Rectangle(
+        (min_ev - data_width/2 - data_width_shift/2, vis - data_height/2 - data_height_shift/2), max_ev - min_ev + data_width + data_width_shift, data_height + data_height_shift, fill=False, zorder=-1
+    )
+    ax.add_patch(rect)
+
+
 def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str]):
     with data_path.open("r") as data_fh:
         data_data = json.load(data_fh)
@@ -285,6 +320,7 @@ def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str
     xxx_dep, yyy_dep, optional = build_connecting_lines(node_graph)
     plot_connecting_lines(xxx_dep, yyy_dep, optional)
     # move_annotations_away(xxx_dep, yyy_dep, annotations)
+    plot_weird_rectangles(fig, ax, data_data, node_graph)
     return ax, node_graph
 
 

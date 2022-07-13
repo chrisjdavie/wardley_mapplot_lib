@@ -1,7 +1,13 @@
-* Very simplified - fusion power plant, turbine, power grid
+* Very simplified - make rectangle a node for lines
+* * zorder rect above lines
+* * one line for power
+* * no lines for other nodes
+* * Squash very simplified, don't need all that y space
+* * stop calling it the weird rectangle
 * Make "Node Graph" object, functions to add 
 * * 2 bottom of nodes.py
 * * `for node in node_list if node.subcat == subcat`?
+* decouple NodeList to a builder
 # Blog post idea
 * 2 posts - one justification, one "Wardley Maps in scientific research"
 * Problem statement, ish, - A way of having a conversation about the problem - going "this is a problem", "this might be a solution" for each point, while I'm trying to communicate something about the agregate challenge that Wardley Maps do very well, overall picture

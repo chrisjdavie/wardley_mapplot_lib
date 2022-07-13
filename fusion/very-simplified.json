@@ -33,7 +33,7 @@
             "title": "Solar",
             "type": "Node",
             "dependencies": [],
-            "visibility": 2.5,
+            "visibility": 2,
             "evolution": 3.1
         },
         {
@@ -41,7 +41,7 @@
             "title": "Nuclear",
             "type": "Node",
             "dependencies": [],
-            "visibility": 3,
+            "visibility": 2,
             "evolution": 1.8
         },
         {
@@ -49,8 +49,16 @@
             "title": "Gas",
             "type": "Node",
             "dependencies": [],
-            "visibility": 3.5,
+            "visibility": 2,
             "evolution": 2.7
         }
-    ]
+    ],
+    "weird-rectangles": {
+        "power": [
+            "Fusion",
+            "Solar",
+            "Nuclear",
+            "Gas"
+        ]
+    }
 }
