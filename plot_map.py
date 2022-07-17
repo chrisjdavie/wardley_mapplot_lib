@@ -274,7 +274,7 @@ def build_rescale_node_graph(graph_data: list[NodeDataType]) -> NodeGraph:
 
 def plot_weird_rectangles(fig, ax, data_data: dict, node_graph: NodeGraph):
 
-    targets = data_data["weird-rectangles"]["power"]
+    targets = data_data["interchanges"]["power"]
     target_nodes = [node for node in node_graph if node.code in targets]
 
     min_ev = min(node.evolution for node in target_nodes)
