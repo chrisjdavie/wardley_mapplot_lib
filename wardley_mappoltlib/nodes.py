@@ -97,24 +97,28 @@ class NodeGraph(list[Node]):
 class Interchange:
     """
     This represents the optional straight-replacement of alternate nodes.
-    There's probably a case where you want to draw connections (likely 
-    downwards?) for a single node.
 
-    At the moment this relationship doesn't think about any of that, it's
-    just a place to calc the variables.
+    It is clearly from the same base type as Node, but not introducing a class
+    heirarchy until I understand it a little better
+
+    Interchanges containing interchanges are not a thing?
     """
 
     code: str
     title: str
-    type: str
-    interchanges: List[Node]  # not a NodeGraph
-    # these are derived from interchanges
     visibility: float
+    # will be modified by plotting code
+    evolution: float
     evolution_max: float
     evolution_min: float
 
+    interchanges: List[Node]  # not a NodeGraph
+
+    dependencies: List[str] = field(default_factory=list)
+    type: str = "interchange"
+
     @classmethod
-    def from_node_graph(cls, *args, interchange_codes: List[str], node_graph: NodeGraph) -> Optional[Interchange]:
+    def from_node_graph(cls, code, title, interchange_codes: List[str], node_graph: NodeGraph) -> Interchange:
         if not interchange_codes:
             return None
 
@@ -131,4 +135,7 @@ class Interchange:
         ev_min: float = min(node.evolution for node in interchanges)
         ev_max: float = min(node.evolution for node in interchanges)
 
-        return cls(*args, interchanges, visibility, ev_min, ev_max)
+        # will be modified by plotting code
+        evolution = (ev_min + ev_max)/2
+
+        return cls(code, title, visibility, evolution, ev_min, ev_max, interchanges)

@@ -6,10 +6,7 @@
             "title": "Power Grid",
             "type": "Node",
             "dependencies": [
-                "Fusion",
-                "Solar",
-                "Nuclear",
-                "Gas"
+                "Power"
             ],
             "visibility": 1,
             "evolution": 3.5
@@ -53,7 +50,7 @@
             "evolution": 2.7
         }
     ],
-    "interchange": {
+    "interchanges": {
         "power": [
             "Fusion",
             "Solar",

@@ -117,9 +117,6 @@ def plot_annotate_nodes(node_graph: NodeGraph, ax, subcat_marker_map: Dict[str, 
         edgecolors="black",
         s=MARKER_SIZE
     )
-    a: int
-    b: int
-    c: int
 
     xx: list[float] = [node.evolution for node in node_graph]
     yy: list[float] = [node.visibility for node in node_graph]

@@ -1,7 +1,7 @@
 * Very simplified - make rectangle a node for lines
-* * zorder rect above lines
 * * one line for power
 * * no lines for other nodes
+* * * need multiple graphs + "unconnected" nodes, or need to explore interchanges, which is a different relationship...
 * * Squash very simplified, don't need all that y space
 * * stop calling it the weird rectangle
 * Make "Node Graph" object, functions to add 
