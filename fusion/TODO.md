@@ -1,4 +1,7 @@
 * Very simplified - make rectangle a node for lines
+* * Interchange data type
+* * * what does inherited lists do when added?
+* * * separate the list from the inheritance, make it a data type + builder, the methods 
 * * one line for power
 * * no lines for other nodes
 * * * need multiple graphs + "unconnected" nodes, or need to explore interchanges, which is a different relationship...

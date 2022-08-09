@@ -71,7 +71,6 @@ class NodeGraph(list[Node]):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self._rescale()
         self._build_graph()
 
     @classmethod
@@ -91,6 +90,9 @@ class NodeGraph(list[Node]):
             for child_code in a_node.dependencies:
                 child_node: Node = code_node_map[child_code]
                 a_node.children.append(child_node)
+
+
+InterchangeDataType = Dict[str, Union[str, List[str]]]
 
 
 @dataclass
@@ -139,3 +141,7 @@ class Interchange:
         evolution = (ev_min + ev_max)/2
 
         return cls(code, title, visibility, evolution, ev_min, ev_max, interchanges)
+
+    @classmethod
+    def from_dict(cls, data: InterchangeDataType, node_graph: NodeGraph) -> Interchange:
+        return cls.from_node_graph(data["code"], data["title"], data["interchanges"], node_graph)

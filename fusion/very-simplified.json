@@ -51,7 +51,9 @@
         }
     ],
     "interchanges": {
-        "power": [
+        "code": "Power",
+        "title": "power",
+        "interchanges": [
             "Fusion",
             "Solar",
             "Nuclear",
