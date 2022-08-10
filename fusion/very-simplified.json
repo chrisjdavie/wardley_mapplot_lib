@@ -50,14 +50,16 @@
             "evolution": 2.7
         }
     ],
-    "interchanges": {
-        "code": "Power",
-        "title": "power",
-        "interchanges": [
-            "Fusion",
-            "Solar",
-            "Nuclear",
-            "Gas"
-        ]
-    }
+    "interchanges": [
+        {
+            "code": "Power",
+            "title": "power",
+            "interchanges": [
+                "Fusion",
+                "Solar",
+                "Nuclear",
+                "Gas"
+            ]
+        }
+    ]
 }

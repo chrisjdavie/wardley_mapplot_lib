@@ -6,7 +6,7 @@
 * * no lines for other nodes
 * * * need multiple graphs + "unconnected" nodes, or need to explore interchanges, which is a different relationship...
 * * Squash very simplified, don't need all that y space
-* * stop calling it the weird rectangle
+* Learn what Wardley called interchanges, name them that
 * Make "Node Graph" object, functions to add 
 * * 2 bottom of nodes.py
 * * `for node in node_list if node.subcat == subcat`?

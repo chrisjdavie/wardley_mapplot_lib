@@ -67,6 +67,9 @@ class Node:
         return cls(**_data_to_modify, arrows=arrows)
 
 
+# NodeGraphDataType = list[Node]
+
+
 class NodeGraph(list[Node]):
 
     def __init__(self, *args, **kwargs):
@@ -117,6 +120,9 @@ class Interchange:
     interchanges: List[Node]  # not a NodeGraph
 
     dependencies: List[str] = field(default_factory=list)
+
+    subcat: Optional[str] = None
+    optional: bool = False
     type: str = "interchange"
 
     @classmethod

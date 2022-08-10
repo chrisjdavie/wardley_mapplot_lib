@@ -1,10 +1,7 @@
 from copy import copy
-from curses.textpad import rectangle
 from dataclasses import dataclass
-from email.generator import Generator
 from pathlib import Path
-from turtle import fillcolor
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Tuple
 import json
 import os
 import math
@@ -18,7 +15,7 @@ import numpy as np
 from scipy import interpolate
 
 from wardley_mappoltlib.nodes import \
-    Arrow, Node, NodeDataType, NodeGraph
+    Arrow, Interchange, Node, NodeDataType, NodeGraph
 
 
 VISIBILITY_BOOST = 0.05
@@ -269,7 +266,7 @@ def build_rescale_node_graph(graph_data: list[NodeDataType]) -> NodeGraph:
     return node_graph
 
 
-def plot_weird_rectangles(fig, ax, data_data: dict, node_graph: NodeGraph):
+def plot_interchanges(fig, ax, data_data: dict, node_graph: NodeGraph):
 
     targets = data_data["interchanges"]["power"]
     target_nodes = [node for node in node_graph if node.code in targets]
@@ -317,7 +314,7 @@ def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str
     xxx_dep, yyy_dep, optional = build_connecting_lines(node_graph)
     plot_connecting_lines(xxx_dep, yyy_dep, optional)
     # move_annotations_away(xxx_dep, yyy_dep, annotations)
-    plot_weird_rectangles(fig, ax, data_data, node_graph)
+    plot_interchanges(fig, ax, data_data, node_graph)
     return ax, node_graph
 
 
