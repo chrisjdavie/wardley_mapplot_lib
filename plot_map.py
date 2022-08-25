@@ -15,7 +15,7 @@ import numpy as np
 from scipy import interpolate
 
 from wardley_mappoltlib.nodes import \
-    Arrow, Interchange, Node, NodeDataType, NodeGraph
+    Arrow, build_node_graph, Interchange, Node, NodeDataType, NodesType, nodes_from_node_data
 
 
 VISIBILITY_BOOST = 0.05
@@ -82,18 +82,39 @@ def setup_plot(ax, max_evolution=4):
     ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
 
 
-def plot_annotate_nodes(node_graph: NodeGraph, ax, subcat_marker_map: Dict[str, str]):
+def plot_annotate_nodes(node_list: list[Node], ax, subcat_marker_map: Dict[str, str]):
     # Sort out axis points
 
-    remaining: NodeGraph = copy(node_graph)
+    remaining: list[Node] = copy(node_list)
+
+    xx_interchange: list[float] = [
+        node.evolution for node in node_list if node.type == "interchange"
+    ]
+    yy_interchange: list[float] = [
+        node.visibility for node in node_list if node.type == "interchange"
+    ]
+    for node in node_list:
+        if node.type == "interchange":
+            remaining.remove(node)
+
+    plt.scatter(
+        xx_interchange,
+        yy_interchange,
+        c="white",
+        edgecolors="black",
+        marker="s",
+        s=MARKER_SIZE
+    )
 
     for subcat, marker_style in subcat_marker_map.items():
 
         xx_subcat: list[float] = [
-            node.evolution for node in node_graph if node.subcat == subcat]
+            node.evolution for node in node_list if node.subcat == subcat
+        ]
         yy_subcat: list[float] = [
-            node.visibility for node in node_graph if node.subcat == subcat]
-        for node in node_graph:
+            node.visibility for node in node_list if node.subcat == subcat
+        ]
+        for node in node_list:
             if node.subcat == subcat:
                 remaining.remove(node)
 
@@ -106,7 +127,6 @@ def plot_annotate_nodes(node_graph: NodeGraph, ax, subcat_marker_map: Dict[str, 
 
     xx_remain: list[float] = [node.evolution for node in remaining]
     yy_remain: list[float] = [node.visibility for node in remaining]
-    print(xx_remain)
     plt.scatter(
         xx_remain,
         yy_remain,
@@ -115,9 +135,9 @@ def plot_annotate_nodes(node_graph: NodeGraph, ax, subcat_marker_map: Dict[str, 
         s=MARKER_SIZE
     )
 
-    xx: list[float] = [node.evolution for node in node_graph]
-    yy: list[float] = [node.visibility for node in node_graph]
-    text = [node.title for node in node_graph]
+    xx: list[float] = [node.evolution for node in node_list]
+    yy: list[float] = [node.visibility for node in node_list]
+    text = [node.title for node in node_list]
     annotations = []
 
     for x_i, y_i, t_i in zip(xx, yy, text):
@@ -173,7 +193,7 @@ class HandlerWplArrow(HandlerNpoints):
         return [legline, legline]
 
 
-def plot_arrow(node_graph: NodeGraph, ax) -> List[Arrow]:
+def plot_arrow(node_graph: NodesType, ax) -> List[Arrow]:
 
     for node in node_graph:
         for an_arrow in node.arrows:
@@ -182,8 +202,9 @@ def plot_arrow(node_graph: NodeGraph, ax) -> List[Arrow]:
             ax.add_line(line)
 
 
-def build_connecting_lines(node_graph: NodeGraph
-                           ) -> Tuple[List[Tuple[float]], List[Tuple[float]], List[bool]]:
+def build_connecting_lines(
+    node_graph: NodesType
+) -> Tuple[List[Tuple[float]], List[Tuple[float]], List[bool]]:
     xxx_dep = [
         (node.evolution, child.evolution)
         for node in node_graph for child in node.children
@@ -215,8 +236,10 @@ def plot_connecting_lines(
 
 
 def move_annotations_away(
-        xxx_dep: List[Tuple[float]], yyy_dep: List[Tuple[float]],
-        annotations) -> None:
+    xxx_dep: List[Tuple[float]],
+    yyy_dep: List[Tuple[float]],
+    annotations
+) -> None:
 
     # make the annotations not cross the lines
     # get lots of dots along the lines plotted above
@@ -242,65 +265,71 @@ def move_annotations_away(
     )
 
 
-def build_rescale_node_graph(graph_data: list[NodeDataType]) -> NodeGraph:
+def rescale_nodes(nodes: NodesType) -> None:
     """
     Rescale visibility
     """
-    node_graph = NodeGraph.from_node_data(graph_data)
+    if len(nodes) == 1:
+        nodes[0].visibility = nodes[0].visibility
+        return
 
-    if len(node_graph) == 1:
-        node_graph[0].visibility = node_graph[0].visibility
-        return node_graph
-
-    vis_min = min([n.visibility for n in node_graph])
-    vis_max = max([n.visibility for n in node_graph])
+    vis_min = min([n.visibility for n in nodes])
+    vis_max = max([n.visibility for n in nodes])
     scale_factor = vis_max - vis_min
-    for node in node_graph:
+    for node in nodes:
         node.visibility = (
             scale_factor - (node.visibility - vis_min))/scale_factor
 
     # shift visibility
-    for node in node_graph:
+    for node in nodes:
         node.visibility += VISIBILITY_BOOST
 
-    return node_graph
 
+def plot_interchanges(fig, ax, interchange: Interchange):
 
-def plot_interchanges(fig, ax, data_data: dict, node_graph: NodeGraph):
-
-    targets = data_data["interchanges"]["power"]
-    target_nodes = [node for node in node_graph if node.code in targets]
-
-    min_ev = min(node.evolution for node in target_nodes)
-    max_ev = max(node.evolution for node in target_nodes)
-    # won't work if the nodes have different visibilities
-    vis = min(node.visibility for node in target_nodes)
     # this is the definition of points in mpl, I can use x & y lims
     # data values to convert this to data points and then draw the rectangle
     # as I like
     # look up how those rectangles look when wardley draws them
     # https://stackoverflow.com/questions/14827650/pyplot-scatter-plot-marker-size/47403507#47403507
-    print(min_ev, max_ev, vis)
+
     win_ext = ax.get_window_extent()
-    print(dir(ax.yaxis))
     y_0, y_1 = ax.get_ylim()
-    print(win_ext.height, win_ext.ymin, win_ext.ymax)
     data_height = (y_1 - y_0) * math.sqrt(MARKER_SIZE)/(win_ext.height)
     data_height_shift = data_height
 
     x_0, x_1 = ax.get_xlim()
     data_width = (x_1 - x_0) * math.sqrt(MARKER_SIZE)/(win_ext.width)
     data_width_shift = data_width
+    print("data_width", data_width)
+    print(interchange.evolution_min)
+    print(interchange.evolution_max)
     rect = patches.Rectangle(
-        (min_ev - data_width/2 - data_width_shift/2, vis - data_height/2 - data_height_shift/2), max_ev - min_ev + data_width + data_width_shift, data_height + data_height_shift, fill=False, zorder=-1
+        (
+            interchange.evolution_min - data_width/2 - data_width_shift/2,
+            interchange.visibility - data_height/2 - data_height_shift/2
+        ),
+        interchange.evolution_max - interchange.evolution_min +
+        data_width + data_width_shift,
+        data_height + data_height_shift,
+        fill=False,
+        zorder=-1
     )
     ax.add_patch(rect)
+    return interchange.visibility + (data_height + data_height_shift)/2
 
 
 def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str]):
     with data_path.open("r") as data_fh:
         data_data = json.load(data_fh)
-    node_graph: NodeGraph = build_rescale_node_graph(data_data["nodes"])
+
+    nodes: list[Node] = nodes_from_node_data(data_data["nodes"])
+    rescale_nodes(nodes)
+    interchanges: list[Interchange] = [
+        Interchange.from_dict(interchange_row, nodes) for interchange_row in data_data["interchanges"]
+    ]
+    nodes: NodesType = nodes + interchanges
+    build_node_graph(nodes)
 
     fig = plt.figure(figsize=[12.8, 9.6])
     ax = fig.add_subplot()
@@ -309,43 +338,46 @@ def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str
 
     plt.title(data_data["title"], weight="bold", fontsize=14)
 
-    annotations = plot_annotate_nodes(node_graph, ax, subcat_marker_map)
-    plot_arrow(node_graph, ax)
-    xxx_dep, yyy_dep, optional = build_connecting_lines(node_graph)
-    plot_connecting_lines(xxx_dep, yyy_dep, optional)
-    # move_annotations_away(xxx_dep, yyy_dep, annotations)
-    plot_interchanges(fig, ax, data_data, node_graph)
-    return ax, node_graph
+    for interchange in interchanges:
+        # the location for visibility is top middle of the interchange box
+        interchange.visibility = plot_interchanges(fig, ax, interchange)
+    annotations = plot_annotate_nodes(nodes, ax, subcat_marker_map)
+    # plot_arrow(node_graph, ax)
+    # xxx_dep, yyy_dep, optional = build_connecting_lines(node_graph)
+    # plot_connecting_lines(xxx_dep, yyy_dep, optional)
+    # # move_annotations_away(xxx_dep, yyy_dep, annotations)
+    # plot_interchanges(fig, ax, data_data, node_graph)
+    return ax, nodes
 
 
-def draw_data_from_json(data_path: Path):
-    with data_path.open("r") as data_fh:
-        data_data = json.load(data_fh)
-    node_graph: NodeGraph = NodeGraph.from_node_data(data_data["nodes"])
+# def draw_data_from_json(data_path: Path):
+#     with data_path.open("r") as data_fh:
+#         data_data = json.load(data_fh)
+#     node_graph: NodeGraph = NodeGraph.from_node_data(data_data["nodes"])
 
-    fig = plt.figure(figsize=[12.8, 9.6])
-    ax = fig.add_subplot()
+#     fig = plt.figure(figsize=[12.8, 9.6])
+#     ax = fig.add_subplot()
 
-    ax.spines["top"].set_visible(False)
-    ax.spines["bottom"].set_visible(False)
-    for tick in ax.get_xmajorticklabels():
-        tick.set_visible(False)
-    for tick in ax.get_ymajorticklabels():
-        tick.set_visible(False)
-    plt.xticks([])
-    plt.yticks([])
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_visible(False)
-    # setup_plot(ax)
-    plt.title(data_data["title"], weight="bold", fontsize=14)
-    annotations = plot_annotate_nodes(node_graph, ax)
-    xxx_dep, yyy_dep, _ = build_connecting_lines(node_graph)
-    plot_connecting_lines(xxx_dep, yyy_dep)
-    move_annotations_away(xxx_dep, yyy_dep, annotations)
+#     ax.spines["top"].set_visible(False)
+#     ax.spines["bottom"].set_visible(False)
+#     for tick in ax.get_xmajorticklabels():
+#         tick.set_visible(False)
+#     for tick in ax.get_ymajorticklabels():
+#         tick.set_visible(False)
+#     plt.xticks([])
+#     plt.yticks([])
+#     ax.spines["right"].set_visible(False)
+#     ax.spines["left"].set_visible(False)
+#     # setup_plot(ax)
+#     plt.title(data_data["title"], weight="bold", fontsize=14)
+#     annotations = plot_annotate_nodes(node_graph, ax)
+#     xxx_dep, yyy_dep, _ = build_connecting_lines(node_graph)
+#     plot_connecting_lines(xxx_dep, yyy_dep)
+#     move_annotations_away(xxx_dep, yyy_dep, annotations)
 
-    # TODO
-    # - lines grey, less emphasis
-    # - icons bigger
+#     # TODO
+#     # - lines grey, less emphasis
+#     # - icons bigger
 
 
 if __name__ == "__main__":
@@ -364,7 +396,7 @@ if __name__ == "__main__":
     ax, node_graph = draw_wardley_map_from_json(data_path, subcat_marker_map)
 
     image_dir = data_dir
-    image_path = image_dir / (data_path.stem+".svg")
+    image_path = image_dir / (data_path.stem+"_tmp.svg")
     print(data_path)
 
     arrow_types = set(
@@ -397,4 +429,4 @@ if __name__ == "__main__":
         print(image_path)
         plt.savefig(image_path)
 
-    # plt.show()
+    plt.show()

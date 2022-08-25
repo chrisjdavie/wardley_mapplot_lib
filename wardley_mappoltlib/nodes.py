@@ -67,32 +67,17 @@ class Node:
         return cls(**_data_to_modify, arrows=arrows)
 
 
-# NodeGraphDataType = list[Node]
+# class NodeGraph(list[Node]):
 
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self._build_graph()
 
-class NodeGraph(list[Node]):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._build_graph()
-
-    @classmethod
-    def from_node_data(cls, graph_data: List[NodeDataType]) -> NodeGraph:
-        """
-        builds a node list from a graph_data dictionary
-        """
-        return cls(Node.from_dict(gd) for gd in graph_data)
-
-    def _build_graph(self) -> None:
-        """
-        Updates the Nodes to have neighbours and children
-        """
-        code_node_map: Dict[str, Node] = {n.code: n for n in self}
-
-        for a_node in self:
-            for child_code in a_node.dependencies:
-                child_node: Node = code_node_map[child_code]
-                a_node.children.append(child_node)
+def nodes_from_node_data(graph_data: List[NodeDataType]) -> list[Node]:
+    """
+    builds a node list from a graph_data dictionary
+    """
+    return list(Node.from_dict(gd) for gd in graph_data)
 
 
 InterchangeDataType = Dict[str, Union[str, List[str]]]
@@ -114,8 +99,8 @@ class Interchange:
     visibility: float
     # will be modified by plotting code
     evolution: float
-    evolution_max: float
     evolution_min: float
+    evolution_max: float
 
     interchanges: List[Node]  # not a NodeGraph
 
@@ -124,30 +109,46 @@ class Interchange:
     subcat: Optional[str] = None
     optional: bool = False
     type: str = "interchange"
+    arrows = []
 
     @classmethod
-    def from_node_graph(cls, code, title, interchange_codes: List[str], node_graph: NodeGraph) -> Interchange:
+    def from_node_graph(cls, code, title, interchange_codes: List[str], nodes: list[Node]) -> Interchange:
         if not interchange_codes:
             return None
 
-        interchanges: List[Node] = [
-            node for node in node_graph if node.code in interchange_codes
+        interchange_nodes: List[Node] = [
+            node for node in nodes if node.code in interchange_codes
         ]
-        visibility = interchanges[0].visibility
-        if not all(visibility == node.visibility for node in interchanges):
+        visibility = interchange_nodes[0].visibility
+        if not all(visibility == node.visibility for node in interchange_nodes):
             raise ValueError(
                 "The visibility for the interchange nodes is not identical."
                 "This is not valid.\n"
                 f"Interchange codes {interchange_codes}"
             )
-        ev_min: float = min(node.evolution for node in interchanges)
-        ev_max: float = min(node.evolution for node in interchanges)
+        ev_min: float = min(node.evolution for node in interchange_nodes)
+        ev_max: float = max(node.evolution for node in interchange_nodes)
 
         # will be modified by plotting code
         evolution = (ev_min + ev_max)/2
 
-        return cls(code, title, visibility, evolution, ev_min, ev_max, interchanges)
+        return cls(code, title, visibility, evolution, ev_min, ev_max, interchange_nodes)
 
     @classmethod
-    def from_dict(cls, data: InterchangeDataType, node_graph: NodeGraph) -> Interchange:
-        return cls.from_node_graph(data["code"], data["title"], data["interchanges"], node_graph)
+    def from_dict(cls, data: InterchangeDataType, nodes: list[Node]) -> Interchange:
+        return cls.from_node_graph(data["code"], data["title"], data["interchanges"], nodes)
+
+
+NodesType = list[Union[Node, Interchange]]
+
+
+def build_node_graph(nodes: NodesType) -> None:
+    """
+    Updates the Nodes to have neighbours and children
+    """
+    code_node_map: Dict[str, Node] = {n.code: n for n in nodes}
+
+    for a_node in nodes:
+        for child_code in a_node.dependencies:
+            child_node: Node = code_node_map[child_code]
+            a_node.children.append(child_node)

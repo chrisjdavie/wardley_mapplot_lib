@@ -7,7 +7,10 @@
 * * * need multiple graphs + "unconnected" nodes, or need to explore interchanges, which is a different relationship...
 * * Squash very simplified, don't need all that y space
 * Learn what Wardley called interchanges, name them that
-* Make "Node Graph" object, functions to add 
+* proper ABC for nodes, to get type suggestions right and state relationships
+* in `def plot_annotate_nodes`, I've repeated the same pattern 3 times - abstract away
+* rescale nodes to nodes
+* Make "Node Graph" object, functions to add ?
 * * 2 bottom of nodes.py
 * * `for node in node_list if node.subcat == subcat`?
 * decouple NodeList to a builder
