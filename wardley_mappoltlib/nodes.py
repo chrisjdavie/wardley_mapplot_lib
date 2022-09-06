@@ -67,12 +67,6 @@ class Node:
         return cls(**_data_to_modify, arrows=arrows)
 
 
-# class NodeGraph(list[Node]):
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self._build_graph()
-
 def nodes_from_node_data(graph_data: List[NodeDataType]) -> list[Node]:
     """
     builds a node list from a graph_data dictionary
@@ -110,6 +104,7 @@ class Interchange:
     optional: bool = False
     type: str = "interchange"
     arrows = []
+    children = []
 
     @classmethod
     def from_node_graph(cls, code, title, interchange_codes: List[str], nodes: list[Node]) -> Interchange:

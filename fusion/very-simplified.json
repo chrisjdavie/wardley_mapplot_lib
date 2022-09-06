@@ -31,7 +31,13 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 2,
-            "evolution": 3.1
+            "evolution": 3.1,
+            "arrows": [
+                {
+                    "evolution": 3.3,
+                    "type": "inertia"
+                }
+            ]
         },
         {
             "code": "Nuclear",
@@ -39,7 +45,13 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 2,
-            "evolution": 1.8
+            "evolution": 1.8,
+            "arrows": [
+                {
+                    "evolution": 1.9,
+                    "type": "inertia"
+                }
+            ]
         },
         {
             "code": "Gas",
@@ -47,7 +59,13 @@
             "type": "Node",
             "dependencies": [],
             "visibility": 2,
-            "evolution": 2.7
+            "evolution": 2.7,
+            "arrows": [
+                {
+                    "evolution": 2.8,
+                    "type": "inertia"
+                }
+            ]
         }
     ],
     "interchanges": [

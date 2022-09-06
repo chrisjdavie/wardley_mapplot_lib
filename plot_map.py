@@ -31,7 +31,7 @@ class ArrowStyle:
 
 ARROW_STYLES = {
     "driven": ArrowStyle("C1", ":", "Evolution driven by research"),
-    "required": ArrowStyle("C0", "--", "Evolution required for working reactor")
+    "inertia": ArrowStyle("C0", "--", "Evolution")
 }
 
 
@@ -193,9 +193,9 @@ class HandlerWplArrow(HandlerNpoints):
         return [legline, legline]
 
 
-def plot_arrow(node_graph: NodesType, ax) -> List[Arrow]:
+def plot_arrow(node_list: NodesType, ax) -> List[Arrow]:
 
-    for node in node_graph:
+    for node in node_list:
         for an_arrow in node.arrows:
             line = InertiaArrow.from_arrow(
                 an_arrow, node.visibility)
@@ -342,11 +342,10 @@ def draw_wardley_map_from_json(data_path: Path, subcat_marker_map: Dict[str, str
         # the location for visibility is top middle of the interchange box
         interchange.visibility = plot_interchanges(fig, ax, interchange)
     annotations = plot_annotate_nodes(nodes, ax, subcat_marker_map)
-    # plot_arrow(node_graph, ax)
-    # xxx_dep, yyy_dep, optional = build_connecting_lines(node_graph)
-    # plot_connecting_lines(xxx_dep, yyy_dep, optional)
-    # # move_annotations_away(xxx_dep, yyy_dep, annotations)
-    # plot_interchanges(fig, ax, data_data, node_graph)
+    plot_arrow(nodes, ax)
+    xxx_dep, yyy_dep, optional = build_connecting_lines(nodes)
+    plot_connecting_lines(xxx_dep, yyy_dep, optional)
+    # move_annotations_away(xxx_dep, yyy_dep, annotations)
     return ax, nodes
 
 
